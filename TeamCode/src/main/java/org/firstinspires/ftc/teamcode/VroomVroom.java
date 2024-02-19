@@ -274,6 +274,7 @@ public class VroomVroom extends LinearOpMode {
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.addData("Pan Up/Down","%1f", panServoPos);
             telemetry.addData("Right Trigger", "%1f", gamepad2.right_trigger);
+            telemetry.addData("Pixel Drop Pos", "%1f", pixelDropPos);
 
             telemetry.update();
         }
