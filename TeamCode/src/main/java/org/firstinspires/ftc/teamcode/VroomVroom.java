@@ -88,7 +88,7 @@ public class VroomVroom extends LinearOpMode {
     private CRServo panUD = null;
     private CRServo panUD2 = null;
     private CRServo planeOpen = null;
-    private CRServo pixelDrop = null;
+    private Servo pixelDrop = null;
     @Override
     public void runOpMode() {
 
@@ -107,7 +107,7 @@ public class VroomVroom extends LinearOpMode {
         panUD = hardwareMap.get(CRServo.class, "pan");
         panUD2 = hardwareMap.get(CRServo.class, "pan2");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
-        pixelDrop = hardwareMap.get(CRServo.class, "pDrop");
+        pixelDrop = hardwareMap.get(Servo.class, "pDrop");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -131,7 +131,7 @@ public class VroomVroom extends LinearOpMode {
         panUD.setDirection(CRServo.Direction.REVERSE);
         panUD2.setDirection(CRServo.Direction.FORWARD);
         planeOpen.setDirection(CRServo.Direction.FORWARD);
-        pixelDrop.setDirection(CRServo.Direction.FORWARD);
+        pixelDrop.setDirection(Servo.Direction.FORWARD);
 
 
 
@@ -154,7 +154,7 @@ public class VroomVroom extends LinearOpMode {
             double panServoPower= 0;
             double planePower = 0;
             double spinPower = 0;
-            double pixelDropPower = 0;
+            double pixelDropPos = 0;
 
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
@@ -221,12 +221,12 @@ public class VroomVroom extends LinearOpMode {
 
             // Pixel Drop
             if(gamepad1.a) {
-                pixelDropPower = 1;
+                pixelDropPos = 1;
             } else if (gamepad1.y) {
-                pixelDropPower = -1;
+                pixelDropPos = -1;
             }
             else {
-                pixelDropPower = 0;
+                pixelDropPos = 0;
             }
 
             // This is test code:
@@ -262,7 +262,7 @@ public class VroomVroom extends LinearOpMode {
             panUD.setPower(panServoPower);
             panUD2.setPower(panServoPower);
             planeOpen.setPower(planePower);
-            pixelDrop.setPower(pixelDropPower);
+            pixelDrop.setPosition(pixelDropPos);
 
 
 
