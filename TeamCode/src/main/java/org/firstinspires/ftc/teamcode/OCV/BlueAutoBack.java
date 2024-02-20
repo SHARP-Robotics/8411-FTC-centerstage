@@ -60,6 +60,11 @@ public class BlueAutoBack extends OpMode {
                         })
 
                         .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(1);
+                        })
+
                         .build();
 
                 drive.followTrajectorySequence(trajL);
@@ -86,6 +91,11 @@ public class BlueAutoBack extends OpMode {
                         })
 
                         .lineToLinearHeading(new Pose2d(48.00, 57.00, Math.toRadians(0.00)))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(1);
+                        })
+
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -109,6 +119,11 @@ public class BlueAutoBack extends OpMode {
                         })
 
                         .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(1);
+                        })
+
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
