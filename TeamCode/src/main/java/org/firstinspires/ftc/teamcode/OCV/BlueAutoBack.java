@@ -67,7 +67,7 @@ public class BlueAutoBack extends OpMode {
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.close();
                 stop();
-                requestOpModeStop();
+                //requestOpModeStop();
                 break;
             case RIGHT:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -91,7 +91,7 @@ public class BlueAutoBack extends OpMode {
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.close();
                 stop();
-                requestOpModeStop();
+                //requestOpModeStop();
                 break;
             case MIDDLE:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -114,7 +114,7 @@ public class BlueAutoBack extends OpMode {
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.close();
                 stop();
-                requestOpModeStop();
+                //requestOpModeStop();
                 break;
             case NONE:
                 visionPortal.setProcessorEnabled(drawProcessor, true);
