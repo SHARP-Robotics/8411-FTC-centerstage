@@ -57,7 +57,7 @@ public class BlueAutoBack extends OpMode {
                         .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(1);
+                            pixelDrop.setPosition(0);
                         })
 
                         .build();
@@ -83,7 +83,7 @@ public class BlueAutoBack extends OpMode {
                         .lineToLinearHeading(new Pose2d(48.00, 57.00, Math.toRadians(0.00)))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(1);
+                            pixelDrop.setPosition(0);
                         })
 
                         .build();
@@ -106,7 +106,7 @@ public class BlueAutoBack extends OpMode {
                         .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(1);
+                            pixelDrop.setPosition(0);
                         })
 
                         .build();

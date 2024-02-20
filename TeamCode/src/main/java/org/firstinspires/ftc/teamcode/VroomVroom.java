@@ -222,12 +222,12 @@ public class VroomVroom extends LinearOpMode {
 
             // Pixel Drop
             if(gamepad1.a) {
-                pixelDropPos = 1;
+                pixelDropPos = 0;
             } else if (gamepad1.y) {
                 pixelDropPos = -1;
             }
             else {
-                pixelDropPos = 0;
+                pixelDropPos = 1;
             }
 
             // This is test code:
