@@ -54,11 +54,6 @@ public class BlueAutoBack extends OpMode {
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
                         .lineToConstantHeading(new Vector2d(22.00, 29.00))
-
-                        .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(1);
-                        })
-
                         .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
 
                         .addDisplacementMarker(() -> {
@@ -85,11 +80,6 @@ public class BlueAutoBack extends OpMode {
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
                         .lineToConstantHeading(new Vector2d(11.00, 38.00))
                         .lineToLinearHeading(new Pose2d(0, 31, Math.toRadians(180)))
-
-                        .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(1);
-                        })
-
                         .lineToLinearHeading(new Pose2d(48.00, 57.00, Math.toRadians(0.00)))
 
                         .addDisplacementMarker(() -> {
@@ -113,11 +103,6 @@ public class BlueAutoBack extends OpMode {
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
                         .lineToConstantHeading(new Vector2d(11.00, 24.00))
-
-                        .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(1);
-                        })
-
                         .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
 
                         .addDisplacementMarker(() -> {
