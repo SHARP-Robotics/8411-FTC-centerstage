@@ -29,16 +29,13 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.ElapsedTime.Resolution;
 
 
 /*
@@ -152,9 +149,9 @@ public class VroomVroom extends LinearOpMode {
             double yaw     =  gamepad1.right_stick_x;
             double panServoPos = 0;
             double panServoPower= 0;
-            double planePower = 0;
+            double planePower;
             double spinPower = 0;
-            double pixelDropPos = 0;
+            double pixelDropPos;
 
 
 
