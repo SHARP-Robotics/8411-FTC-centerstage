@@ -44,8 +44,6 @@ public class BlueAutoBack extends OpMode {
 
         switch (drawProcessor.getSelection()) {
             case LEFT:
-                visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.stopStreaming();
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
                 Pose2d startPoseL = new Pose2d(11, 61, Math.toRadians(90));
@@ -70,8 +68,6 @@ public class BlueAutoBack extends OpMode {
                 //requestOpModeStop();
                 break;
             case RIGHT:
-                visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
 
                 Pose2d startPoseR = new Pose2d(11, 61, Math.toRadians(90));
@@ -94,8 +90,6 @@ public class BlueAutoBack extends OpMode {
                 //requestOpModeStop();
                 break;
             case MIDDLE:
-                visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
 
                 Pose2d startPoseM = new Pose2d(11, 61, Math.toRadians(90));
@@ -117,8 +111,8 @@ public class BlueAutoBack extends OpMode {
                 //requestOpModeStop();
                 break;
             case NONE:
-                visionPortal.setProcessorEnabled(drawProcessor, true);
-                visionPortal.resumeStreaming();
+                visionPortal.setProcessorEnabled(drawProcessor, false);
+                visionPortal.close();
                 break;
         }
     }
