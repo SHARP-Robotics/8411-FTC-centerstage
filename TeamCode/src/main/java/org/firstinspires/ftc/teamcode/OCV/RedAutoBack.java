@@ -57,7 +57,7 @@ public class RedAutoBack extends OpMode {
                         .lineToConstantHeading(new Vector2d(1, -32))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                            pixelDrop.setPosition(1);
                         })
 
                         .lineToLinearHeading(new Pose2d(50, -60, Math.toRadians(0)))
@@ -82,7 +82,7 @@ public class RedAutoBack extends OpMode {
                         .lineToConstantHeading(new Vector2d(22.00, -28.00))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                            pixelDrop.setPosition(1);
                         })
 
                         .splineToLinearHeading(new Pose2d(50, -60), Math.toRadians(0))

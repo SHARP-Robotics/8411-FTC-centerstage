@@ -56,7 +56,7 @@ public class RedAutoFront extends OpMode {
                         .lineToConstantHeading(new Vector2d(-46.00, -29.00))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                            pixelDrop.setPosition(1);
                         })
 
                         .lineToConstantHeading(new Vector2d(-36, -13))
@@ -84,7 +84,7 @@ public class RedAutoFront extends OpMode {
                         .lineToConstantHeading(new Vector2d(-24, -32))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                            pixelDrop.setPosition(1);
                         })
 
                         .lineToConstantHeading(new Vector2d(10, -32))
@@ -108,7 +108,7 @@ public class RedAutoFront extends OpMode {
                         .lineToConstantHeading(new Vector2d(-36.00, -23.00))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                            pixelDrop.setPosition(1);
                         })
 
                         .lineToConstantHeading(new Vector2d(-36, -13))

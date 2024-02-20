@@ -55,7 +55,7 @@ public class BlueAutoFront extends OpMode {
                         .lineToLinearHeading(new Pose2d(-24.00, 31.00, Math.toRadians(180)))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                            pixelDrop.setPosition(1);
                         })
 
                         .lineToConstantHeading(new Vector2d(10, 31))
@@ -81,7 +81,7 @@ public class BlueAutoFront extends OpMode {
                         .lineToConstantHeading(new Vector2d(-46.00, 30.00))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                            pixelDrop.setPosition(1);
                         })
 
                         .lineToLinearHeading(new Pose2d(-36, 10, Math.toRadians(0)))
@@ -106,7 +106,7 @@ public class BlueAutoFront extends OpMode {
                         .lineToConstantHeading(new Vector2d(-36.00, 26.00))
 
                         .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                            pixelDrop.setPosition(1);
                         })
 
                         .lineToLinearHeading(new Pose2d(-36, 10, Math.toRadians(0)))
