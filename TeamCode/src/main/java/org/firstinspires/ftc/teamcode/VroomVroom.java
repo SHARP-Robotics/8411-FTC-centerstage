@@ -89,6 +89,7 @@ public class VroomVroom extends LinearOpMode {
     private CRServo panUD2 = null;
     private CRServo planeOpen = null;
     private Servo pixelDrop = null;
+    private  Servo pixelBDrop = null;
     @Override
     public void runOpMode() {
 
@@ -108,6 +109,7 @@ public class VroomVroom extends LinearOpMode {
         panUD2 = hardwareMap.get(CRServo.class, "pan2");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
         pixelDrop = hardwareMap.get(Servo.class, "pDrop");
+        pixelBDrop = hardwareMap.get(Servo.class, "pDrop2");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -155,6 +157,7 @@ public class VroomVroom extends LinearOpMode {
             double planePower = 0;
             double spinPower = 0;
             double pixelDropPos = 0;
+            double pixelDropPos2 = 0;
 
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
@@ -229,6 +232,15 @@ public class VroomVroom extends LinearOpMode {
                 pixelDropPos = 0;
             }
 
+            // Pixel Drop 2
+            if(gamepad1.x) {
+                pixelDropPos2 = 1;
+            } else if (gamepad1.b) {
+                pixelDropPos2 = -1;
+            } else {
+                pixelDropPos2 = 0;
+            }
+
             // This is test code:
             //
             // Uncomment the following code to test your motor directions.
@@ -263,6 +275,7 @@ public class VroomVroom extends LinearOpMode {
             panUD2.setPower(panServoPower);
             planeOpen.setPower(planePower);
             pixelDrop.setPosition(pixelDropPos);
+            pixelBDrop.setPosition(pixelDropPos2);
 
 
 
@@ -275,6 +288,7 @@ public class VroomVroom extends LinearOpMode {
             telemetry.addData("Pan Up/Down","%1f", panServoPos);
             telemetry.addData("Right Trigger", "%1f", gamepad2.right_trigger);
             telemetry.addData("Pixel Drop Pos", "%1f", pixelDropPos);
+            telemetry.addData("Pixel Drop Back Pos", "%1f", pixelDropPos2);
 
             telemetry.update();
         }
