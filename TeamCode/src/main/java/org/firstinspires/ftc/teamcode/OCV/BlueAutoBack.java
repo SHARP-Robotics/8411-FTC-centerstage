@@ -64,7 +64,7 @@ public class BlueAutoBack extends OpMode {
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 stop();
-                //requestOpModeStop();
+                requestOpModeStop();
                 break;
             case RIGHT:
                 drive = new SampleMecanumDrive(hardwareMap);
@@ -85,7 +85,7 @@ public class BlueAutoBack extends OpMode {
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 stop();
-                //requestOpModeStop();
+                requestOpModeStop();
                 break;
             case MIDDLE:
                 drive = new SampleMecanumDrive(hardwareMap);
@@ -105,7 +105,7 @@ public class BlueAutoBack extends OpMode {
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 stop();
-                //requestOpModeStop();
+                requestOpModeStop();
                 break;
             case NONE:
                 visionPortal.setProcessorEnabled(drawProcessor, true);
