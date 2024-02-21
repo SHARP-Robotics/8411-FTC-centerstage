@@ -11,6 +11,9 @@ import org.firstinspires.ftc.vision.VisionPortal;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Autonomous
 public class BlueAutoBack extends OpMode {
     private OCVVisionProc drawProcessor;
@@ -38,8 +41,10 @@ public class BlueAutoBack extends OpMode {
     @Override
     public void loop()  {
         pixelDrop = hardwareMap.get(Servo.class, "pDrop");
+        double pos = 1;
 
         telemetry.addData("Identified", drawProcessor.getSelection());
+        telemetry.addData("Position", pos);
 
 
         switch (drawProcessor.getSelection()) {
@@ -47,17 +52,19 @@ public class BlueAutoBack extends OpMode {
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
                 Pose2d startPoseL = new Pose2d(11, 61, Math.toRadians(90));
+                pos = 0;
 
                 drive.setPoseEstimate(startPoseL);
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
                         .lineToConstantHeading(new Vector2d(22.00, 29.00))
-                        .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
+
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
+                        .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
                         .build();
 
                 drive.followTrajectorySequence(trajL);

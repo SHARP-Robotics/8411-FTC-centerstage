@@ -151,7 +151,7 @@ public class VroomVroom extends LinearOpMode {
             double panServoPower= 0;
             double planePower;
             double spinPower = 0;
-            double pixelDropPos;
+            double pixelDropPos = 1;
 
 
 
@@ -221,9 +221,6 @@ public class VroomVroom extends LinearOpMode {
             if(gamepad1.a) {
                 pixelDropPos = 0;
             } else if (gamepad1.y) {
-                pixelDropPos = -1;
-            }
-            else {
                 pixelDropPos = 1;
             }
 
