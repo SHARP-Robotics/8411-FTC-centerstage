@@ -108,7 +108,7 @@ public class BlueAutoBack extends OpMode {
                 //requestOpModeStop();
                 break;
             case NONE:
-                visionPortal.setProcessorEnabled(drawProcessor, false);
+                visionPortal.setProcessorEnabled(drawProcessor, true);
                 break;
         }
     }
