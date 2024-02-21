@@ -210,9 +210,9 @@ public class VroomVroom extends LinearOpMode {
 
             // Ramp
             if(gamepad2.right_trigger > 0.3){
-                spinPower = 1.0;
+                spinPower = 0.8;
             } else if(gamepad2.left_trigger > 0.3){
-                spinPower = -1.0;
+                spinPower = -0.8;
             } else if(gamepad2.left_trigger < 0.3 || gamepad2.right_trigger < 0.3) {
                 spinPower = 0.0;
             }
