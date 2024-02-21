@@ -63,7 +63,6 @@ public class BlueAutoBack extends OpMode {
                 drive.followTrajectorySequence(trajL);
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
                 stop();
                 //requestOpModeStop();
                 break;
@@ -85,7 +84,6 @@ public class BlueAutoBack extends OpMode {
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
                 stop();
                 //requestOpModeStop();
                 break;
@@ -106,13 +104,11 @@ public class BlueAutoBack extends OpMode {
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
                 stop();
                 //requestOpModeStop();
                 break;
             case NONE:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
                 break;
         }
     }
