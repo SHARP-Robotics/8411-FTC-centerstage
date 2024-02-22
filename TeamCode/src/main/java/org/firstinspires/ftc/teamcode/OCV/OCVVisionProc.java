@@ -23,7 +23,6 @@ public class OCVVisionProc implements VisionProcessor {
     public Rect rectRight = new Rect(440, 260, 200, 120);
     Selected selection = Selected.NONE;
 
-
     Mat submat = new Mat();
     Mat hsvMat = new Mat();
 

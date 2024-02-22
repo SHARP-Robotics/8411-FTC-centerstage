@@ -19,6 +19,8 @@ public class BlueAutoBack extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
+    int positionDetect = 0;
+
 
     @Override
     public void init() {
@@ -29,6 +31,20 @@ public class BlueAutoBack extends OpMode {
 
     @Override
     public void init_loop() {
+        switch (drawProcessor.getSelection()) {
+            case LEFT:
+                positionDetect = 1;
+                break;
+            case MIDDLE:
+                positionDetect = 2;
+                break;
+            case RIGHT:
+                positionDetect = 3;
+                break;
+            case NONE:
+                positionDetect = 0;
+                break;
+        }
     }
 
     @Override
@@ -36,23 +52,11 @@ public class BlueAutoBack extends OpMode {
 
         visionPortal.resumeStreaming();
         visionPortal.setProcessorEnabled(drawProcessor, true);
-    }
-
-    @Override
-    public void loop()  {
-        pixelDrop = hardwareMap.get(Servo.class, "pDrop");
-        double pos = 1;
-
-        telemetry.addData("Identified", drawProcessor.getSelection());
-        telemetry.addData("Position", pos);
-
-
-        switch (drawProcessor.getSelection()) {
-            case LEFT:
+        switch ((int) positionDetect) {
+            case 1:
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
                 Pose2d startPoseL = new Pose2d(11, 61, Math.toRadians(90));
-                pos = 0;
 
                 drive.setPoseEstimate(startPoseL);
 
@@ -70,10 +74,8 @@ public class BlueAutoBack extends OpMode {
                 drive.followTrajectorySequence(trajL);
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                stop();
-                requestOpModeStop();
                 break;
-            case RIGHT:
+            case 3:
                 drive = new SampleMecanumDrive(hardwareMap);
 
                 Pose2d startPoseR = new Pose2d(11, 61, Math.toRadians(90));
@@ -91,10 +93,8 @@ public class BlueAutoBack extends OpMode {
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                stop();
-                requestOpModeStop();
                 break;
-            case MIDDLE:
+            case 2:
                 drive = new SampleMecanumDrive(hardwareMap);
 
                 Pose2d startPoseM = new Pose2d(11, 61, Math.toRadians(90));
@@ -111,12 +111,16 @@ public class BlueAutoBack extends OpMode {
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                stop();
-                requestOpModeStop();
                 break;
-            case NONE:
+            case 0:
                 visionPortal.setProcessorEnabled(drawProcessor, true);
                 break;
+
         }
+    }
+
+    @Override
+    public void loop()  {
+        telemetry.addData("Identified", positionDetect);
     }
 }
