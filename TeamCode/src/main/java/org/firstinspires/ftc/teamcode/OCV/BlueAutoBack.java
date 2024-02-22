@@ -31,6 +31,14 @@ public class BlueAutoBack extends OpMode {
 
     @Override
     public void init_loop() {
+
+    }
+
+    @Override
+    public void start() {
+
+        visionPortal.resumeStreaming();
+        visionPortal.setProcessorEnabled(drawProcessor, true);
         switch (drawProcessor.getSelection()) {
             case LEFT:
                 positionDetect = 1;
@@ -45,13 +53,6 @@ public class BlueAutoBack extends OpMode {
                 positionDetect = 0;
                 break;
         }
-    }
-
-    @Override
-    public void start() {
-
-        visionPortal.resumeStreaming();
-        visionPortal.setProcessorEnabled(drawProcessor, true);
         switch ((int) positionDetect) {
             case 1:
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -120,7 +121,7 @@ public class BlueAutoBack extends OpMode {
     }
 
     @Override
-    public void loop()  {
+    public void loop() {
         telemetry.addData("Identified", positionDetect);
     }
 }
