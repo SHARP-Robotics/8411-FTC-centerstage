@@ -104,7 +104,7 @@ public class VroomVroom extends LinearOpMode {
         panUD = hardwareMap.get(CRServo.class, "pan");
         panUD2 = hardwareMap.get(CRServo.class, "pan2");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
-        pixelDrop = hardwareMap.get(Servo.class, "pDrop");
+        pixelDrop = hardwareMap.get(Servo.class, "puDrop");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -138,7 +138,7 @@ public class VroomVroom extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        double pixelDropPos = 0;
+        double pixelDropPos = 1;
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
@@ -242,10 +242,10 @@ public class VroomVroom extends LinearOpMode {
             */
 
             // Send calculated power to wheels
-            leftFrontDrive.setPower(leftFrontPower * 0.6);
-            rightFrontDrive.setPower(rightFrontPower * 0.6);
-            leftBackDrive.setPower(leftBackPower * 0.6);
-            rightBackDrive.setPower(rightBackPower * 0.6);
+            leftFrontDrive.setPower(leftFrontPower * 0.65);
+            rightFrontDrive.setPower(rightFrontPower * 0.65);
+            leftBackDrive.setPower(leftBackPower * 0.65);
+            rightBackDrive.setPower(rightBackPower * 0.65);
             bigArm.setPower(gamepad2.y ? 1.0 : 0);
             bigArm.setPower(gamepad2.a ? -0.7 : 0);
             ramp.setPower(gamepad2.b ? 1.0 : 0);

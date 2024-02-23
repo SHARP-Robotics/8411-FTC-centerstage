@@ -17,8 +17,8 @@ public class MeepMeepy {
                 .setColorScheme(new ColorSchemeBlueDark())
                 .setConstraints(20, 20, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(11, 61, Math.toRadians(90.00)))
-                        .lineToConstantHeading(new Vector2d(22.00, 29.00))
-                        .splineToLinearHeading(new Pose2d(60.00, 57.00), Math.toRadians(0.00))
+                        .lineToConstantHeading(new Vector2d(11.00, 36.00))
+                        .lineToConstantHeading(new Vector2d(48.00, 57.00))
                         .build()
                 );
 
