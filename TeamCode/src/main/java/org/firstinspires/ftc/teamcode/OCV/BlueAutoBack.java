@@ -2,11 +2,15 @@ package org.firstinspires.ftc.teamcode.OCV;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -19,26 +23,25 @@ public class BlueAutoBack extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
+    private Servo backPixelDrop = null;
     int positionDetect = 0;
 
 
     @Override
     public void init() {
         drawProcessor = new OCVVisionProc();
+
+        pixelDrop = hardwareMap.get(Servo.class, "puDrop");
+        backPixelDrop = hardwareMap.get(Servo.class, "pDrop");
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), drawProcessor);
         visionPortal.resumeStreaming();
     }
 
     @Override
     public void init_loop() {
-
-    }
-
-    @Override
-    public void start() {
-
         visionPortal.resumeStreaming();
         visionPortal.setProcessorEnabled(drawProcessor, true);
+
         switch (drawProcessor.getSelection()) {
             case LEFT:
                 positionDetect = 1;
@@ -53,6 +56,17 @@ public class BlueAutoBack extends OpMode {
                 positionDetect = 0;
                 break;
         }
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void loop() {
+        telemetry.addData("Identified", positionDetect);
+
         switch ((int) positionDetect) {
             case 1:
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -62,19 +76,30 @@ public class BlueAutoBack extends OpMode {
                 drive.setPoseEstimate(startPoseL);
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToConstantHeading(new Vector2d(22.00, 29.00))
-
+                        .lineToConstantHeading(new Vector2d(19.00, 61.00))
+                        .lineToConstantHeading(new Vector2d(19.00,29.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .splineToLinearHeading(new Pose2d(48.00, 57.00), Math.toRadians(0.00))
+                        .lineToConstantHeading(new Vector2d(20, 29),
+                                SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+
+                        .lineToConstantHeading(new Vector2d(54, 20))
+                        .lineToConstantHeading(new Vector2d(54.00, 57.00))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0);
+                        })
+
                         .build();
 
                 drive.followTrajectorySequence(trajL);
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
+                positionDetect = 0;
                 break;
             case 3:
                 drive = new SampleMecanumDrive(hardwareMap);
@@ -118,10 +143,5 @@ public class BlueAutoBack extends OpMode {
                 break;
 
         }
-    }
-
-    @Override
-    public void loop() {
-        telemetry.addData("Identified", positionDetect);
     }
 }

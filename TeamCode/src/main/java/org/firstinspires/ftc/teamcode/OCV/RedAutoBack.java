@@ -16,16 +16,35 @@ public class RedAutoBack extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
+    int positionDetect = 0;
 
     @Override
     public void init() {
         drawProcessor = new OCVVisionProc();
+        pixelDrop = hardwareMap.get(Servo.class, "pDrop");
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), drawProcessor);
         visionPortal.resumeStreaming();
     }
 
     @Override
     public void init_loop() {
+        visionPortal.resumeStreaming();
+        visionPortal.setProcessorEnabled(drawProcessor, true);
+
+        switch (drawProcessor.getSelection()) {
+            case LEFT:
+                positionDetect = 1;
+                break;
+            case MIDDLE:
+                positionDetect = 2;
+                break;
+            case RIGHT:
+                positionDetect = 3;
+                break;
+            case NONE:
+                positionDetect = 0;
+                break;
+        }
     }
 
     @Override
@@ -37,13 +56,12 @@ public class RedAutoBack extends OpMode {
 
     @Override
     public void loop()  {
-        pixelDrop = hardwareMap.get(Servo.class, "pDrop");
 
         telemetry.addData("Identified", drawProcessor.getSelection());
 
 
-        switch (drawProcessor.getSelection()) {
-            case LEFT:
+        switch (positionDetect) {
+            case 1:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.stopStreaming();
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -54,7 +72,7 @@ public class RedAutoBack extends OpMode {
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
                         .lineToLinearHeading(new Pose2d(11.00, -40.00, Math.toRadians(0)))
-                        .lineToConstantHeading(new Vector2d(1, -32))
+                        .lineToConstantHeading(new Vector2d(1, -34))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
@@ -66,11 +84,9 @@ public class RedAutoBack extends OpMode {
                 drive.followTrajectorySequence(trajL);
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
-                stop();
-                requestOpModeStop();
+                positionDetect = 0;
                 break;
-            case RIGHT:
+            case 3:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
@@ -89,11 +105,9 @@ public class RedAutoBack extends OpMode {
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
-                stop();
-                requestOpModeStop();
+                positionDetect = 0;
                 break;
-            case MIDDLE:
+            case 2:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
@@ -112,13 +126,9 @@ public class RedAutoBack extends OpMode {
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
-                stop();
-                requestOpModeStop();
+                positionDetect = 0;
                 break;
-            case NONE:
-                visionPortal.setProcessorEnabled(drawProcessor, true);
-                visionPortal.resumeStreaming();
+            case 0:
                 break;
         }
     }

@@ -15,9 +15,11 @@ public class BlueAutoFront extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
+    int positionDetect = 0;
 
     @Override
     public void init() {
+        pixelDrop = hardwareMap.get(Servo.class, "pDrop");
         drawProcessor = new OCVVisionProc();
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), drawProcessor);
         visionPortal.resumeStreaming();
@@ -25,6 +27,23 @@ public class BlueAutoFront extends OpMode {
 
     @Override
     public void init_loop() {
+        visionPortal.resumeStreaming();
+        visionPortal.setProcessorEnabled(drawProcessor, true);
+
+        switch (drawProcessor.getSelection()) {
+            case LEFT:
+                positionDetect = 1;
+                break;
+            case MIDDLE:
+                positionDetect = 2;
+                break;
+            case RIGHT:
+                positionDetect = 3;
+                break;
+            case NONE:
+                positionDetect = 0;
+                break;
+        }
     }
 
     @Override
@@ -36,13 +55,11 @@ public class BlueAutoFront extends OpMode {
 
     @Override
     public void loop()  {
-        pixelDrop = hardwareMap.get(Servo.class, "pDrop");
-
         telemetry.addData("Identified", drawProcessor.getSelection());
 
 
-        switch (drawProcessor.getSelection()) {
-            case LEFT:
+        switch (positionDetect) {
+            case 1:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.stopStreaming();
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -65,11 +82,9 @@ public class BlueAutoFront extends OpMode {
                 drive.followTrajectorySequence(trajL);
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
-                stop();
-                requestOpModeStop();
+                positionDetect = 0;
                 break;
-            case RIGHT:
+            case 3:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
@@ -90,11 +105,9 @@ public class BlueAutoFront extends OpMode {
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
-                stop();
-                requestOpModeStop();
+                positionDetect = 0;
                 break;
-            case MIDDLE:
+            case 2:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
@@ -115,13 +128,9 @@ public class BlueAutoFront extends OpMode {
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
-                visionPortal.close();
-                stop();
-                requestOpModeStop();
+                positionDetect = 0;
                 break;
-            case NONE:
-                visionPortal.setProcessorEnabled(drawProcessor, true);
-                visionPortal.resumeStreaming();
+            case 0:
                 break;
         }
     }
