@@ -73,14 +73,16 @@ public class RedAutoBack extends OpMode {
                 drive.setPoseEstimate(startPoseL);
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToLinearHeading(new Pose2d(11.00, -40.00, Math.toRadians(0)))
-                        .lineToConstantHeading(new Vector2d(1, -34))
+                        .lineToConstantHeading(new Vector2d(16, -41))
+                        .lineToConstantHeading(new Vector2d(6, -36))
+                        .lineToConstantHeading(new Vector2d(6, -37))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToLinearHeading(new Pose2d(50, -60, Math.toRadians(0)))
+                        .lineToConstantHeading(new Vector2d(50, -38))
+                        .lineToConstantHeading(new Vector2d(51, -64))
                         .build();
 
                 drive.followTrajectorySequence(trajL);
@@ -97,15 +99,15 @@ public class RedAutoBack extends OpMode {
 
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
-                        .lineToConstantHeading(new Vector2d(23.00, -60.00))
-                        .lineToConstantHeading(new Vector2d(23.00, -42.00))
+                        .lineToConstantHeading(new Vector2d(27.00, -60.00))
+                        .lineToConstantHeading(new Vector2d(27.00, -42.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(23.00, -52.00))
-                        .lineToConstantHeading(new Vector2d(49.00, -52.00))
+                        .lineToConstantHeading(new Vector2d(27.00, -52.00))
+                        .lineToConstantHeading(new Vector2d(51.00, -60.00))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0);
