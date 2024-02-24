@@ -105,7 +105,7 @@ public class RedAutoBack extends OpMode {
                         })
 
                         .lineToConstantHeading(new Vector2d(23.00, -51.00))
-                        .lineToConstantHeading(new Vector2d(50.00, -60.00))
+                        .lineToConstantHeading(new Vector2d(49.00, -52.00))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0);
@@ -124,13 +124,19 @@ public class RedAutoBack extends OpMode {
 
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
-                        .lineToConstantHeading(new Vector2d(12.00, -24.00))
+                        .lineToConstantHeading(new Vector2d(15.00, -61.00))
+                        .lineToConstantHeading(new Vector2d(12.00, -35.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .splineToLinearHeading(new Pose2d(50, -60), Math.toRadians(0))
+                        .lineToConstantHeading(new Vector2d(12.00, -40.00))
+                        .lineToConstantHeading(new Vector2d(52.00, -60.00))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0);
+                        })
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
