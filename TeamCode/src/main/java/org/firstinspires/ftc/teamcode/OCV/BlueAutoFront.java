@@ -15,11 +15,13 @@ public class BlueAutoFront extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
+    private Servo backPixelDrop =null;
     int positionDetect = 0;
 
     @Override
     public void init() {
         pixelDrop = hardwareMap.get(Servo.class, "pDrop");
+        backPixelDrop = hardwareMap.get(Servo.class, "puDrop");
         drawProcessor = new OCVVisionProc();
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), drawProcessor);
         visionPortal.resumeStreaming();
@@ -66,11 +68,22 @@ public class BlueAutoFront extends OpMode {
 
                 Pose2d startPoseL = new Pose2d(-36, 61, Math.toRadians(90));
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToLinearHeading(new Pose2d(-36.00, 37.00, Math.toRadians(180)))
+                        .lineToLinearHeading(new Pose2d(-35.00, 46.00, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(-40, 40))
+                        .lineToConstantHeading(new Vector2d(-35, 30))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(0);
+                        })
+
                         .lineToConstantHeading(new Vector2d(-44, 27))
                         .lineToConstantHeading(new Vector2d(-36, 10))
                         .lineToConstantHeading(new Vector2d(13, 10))
-                        .lineToLinearHeading(new Pose2d(60, 50, Math.toRadians(90)))
+                        .lineToLinearHeading(new Pose2d(54, 57, Math.toRadians(90)))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0);
+                        })
 
                         .build();
 

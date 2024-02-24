@@ -76,13 +76,14 @@ public class BlueAutoBack extends OpMode {
                 drive.setPoseEstimate(startPoseL);
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToConstantHeading(new Vector2d(19.00, 61.00))
+                        .lineToConstantHeading(new Vector2d(26.00, 61.00))
+                        .lineToConstantHeading(new Vector2d(26.00, 31.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(19.00, 44.00))
+                        .lineToConstantHeading(new Vector2d(26.00, 43.00))
                         .lineToConstantHeading(new Vector2d(44, 56))
 
                         .addDisplacementMarker(() -> {
