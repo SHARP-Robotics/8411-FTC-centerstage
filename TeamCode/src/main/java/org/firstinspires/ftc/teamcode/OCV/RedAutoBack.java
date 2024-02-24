@@ -79,10 +79,10 @@ public class RedAutoBack extends OpMode {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToLinearHeading(new Pose2d(10, -38, Math.toRadians(-35)))
+                        .lineToLinearHeading(new Pose2d(13.5, -40, Math.toRadians(-35)))
                         .lineToLinearHeading(new Pose2d(50, -38, Math.toRadians(0)))
                         .lineToConstantHeading(new Vector2d(51, -58))
-                        .lineToLinearHeading(new Pose2d(51.01, -58.01, Math.toRadians(90)))
+                        .lineToLinearHeading(new Pose2d(51.01, -58.01, Math.toRadians(-90)))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0);
@@ -132,14 +132,12 @@ public class RedAutoBack extends OpMode {
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
                         .lineToConstantHeading(new Vector2d(15.00, -61.00))
-                        .lineToConstantHeading(new Vector2d(12.00, -33.00))
-                        .lineToConstantHeading(new Vector2d(12.00, -37.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-
+                        .lineToConstantHeading(new Vector2d(12.00, -42.00))
                         .lineToConstantHeading(new Vector2d(52.00, -60.00))
 
                         .addDisplacementMarker(() -> {
