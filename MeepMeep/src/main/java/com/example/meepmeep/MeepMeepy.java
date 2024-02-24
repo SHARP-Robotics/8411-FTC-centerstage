@@ -17,15 +17,15 @@ public class MeepMeepy {
                 .setColorScheme(new ColorSchemeBlueDark())
                 .setConstraints(20, 20, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-36, 61, Math.toRadians(90.00)))
-                        .lineToConstantHeading(new Vector2d(-36.00, 34.00))
-                        .turn(Math.toRadians(30.00))
-                        .lineToConstantHeading(new Vector2d(-32.00, 31.00))
-                        .lineToConstantHeading(new Vector2d(-36.00, 10.00))
-                        .turn(Math.toRadians(180.00))
-                        .lineToConstantHeading(new Vector2d(15.00, 10.00))
-                        .lineToLinearHeading(new Pose2d(50, 60, Math.toRadians(90)))
-                        .build()
-                );
+                                .lineToLinearHeading(new Pose2d(-36.00, 37.00, Math.toRadians(180)))
+                                .lineToConstantHeading(new Vector2d(-44, 27))
+                                .lineToConstantHeading(new Vector2d(-36, 10))
+                                .lineToConstantHeading(new Vector2d(13, 10))
+                                .lineToLinearHeading(new Pose2d(60, 50, Math.toRadians(90)))
+
+                                .build();
+
+
 
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
