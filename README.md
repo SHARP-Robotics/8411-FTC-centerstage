@@ -1,4 +1,4 @@
-#8411 SHARP Robotics Team Code Repository
+# 8411 SHARP Robotics Team Code Repository
 
 Welcome to the code repository of Team 8411 SHARP for the FTC (FIRST Tech Challenge) Centerstage 2023-2024 robotics competition! This repository contains the source code for our robot's control systems, autonomous routines, and teleoperation functionalities. Our team is dedicated to innovation, collaboration, and excellence in robotics.
 Key Features:
