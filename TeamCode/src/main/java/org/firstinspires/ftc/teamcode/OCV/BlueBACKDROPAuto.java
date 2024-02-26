@@ -76,9 +76,9 @@ public class BlueBACKDROPAuto extends OpMode {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(26.00, 43.00))
-                        .lineToConstantHeading(new Vector2d(40, 43))
-                        .lineToLinearHeading(new Pose2d(46, 44, Math.toRadians(-90)))
+                        .lineToConstantHeading(new Vector2d(26.00, 45.5))
+                        .lineToLinearHeading(new Pose2d(40.00, 45.5, Math.toRadians(-180)))
+                        .lineToConstantHeading(new Vector2d(51.00, 45.5))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0);
@@ -105,8 +105,9 @@ public class BlueBACKDROPAuto extends OpMode {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToLinearHeading(new Pose2d(40.00, 26.00, Math.toRadians(0)))
-                        .lineToLinearHeading(new Pose2d(46, 26, Math.toRadians(-90)))
+                        .lineToLinearHeading(new Pose2d(24.00, 38.00, Math.toRadians(-90)))
+                        .lineToLinearHeading(new Pose2d(40.00, 32.00, Math.toRadians(-180)))
+                        .lineToConstantHeading(new Vector2d(51, 32))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0);
@@ -131,8 +132,9 @@ public class BlueBACKDROPAuto extends OpMode {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(40.00, 34.00))
-                        .lineToLinearHeading(new Pose2d(46.00, 32.00, Math.toRadians(-90)))
+                        .lineToConstantHeading(new Vector2d(11.00, 38.5))
+                        .lineToLinearHeading(new Pose2d(40.00, 38.5, Math.toRadians(-180)))
+                        .lineToConstantHeading(new Vector2d(51.00, 38.5))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0);
