@@ -138,7 +138,7 @@ public class VroomVroom extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        double pixelDropPos = 1;
+        double pixelDropPos = 0;
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
