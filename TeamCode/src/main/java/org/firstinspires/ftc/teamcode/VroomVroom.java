@@ -104,7 +104,7 @@ public class VroomVroom extends LinearOpMode {
         panUD = hardwareMap.get(CRServo.class, "pan");
         panUD2 = hardwareMap.get(CRServo.class, "pan2");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
-        pixelDrop = hardwareMap.get(Servo.class, "puDrop");
+        pixelDrop = hardwareMap.get(Servo.class, "p3Drop");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
