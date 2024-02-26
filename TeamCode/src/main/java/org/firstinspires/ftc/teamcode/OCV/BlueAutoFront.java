@@ -68,18 +68,16 @@ public class BlueAutoFront extends OpMode {
 
                 Pose2d startPoseL = new Pose2d(-36, 61, Math.toRadians(90));
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToLinearHeading(new Pose2d(-35.00, 46.00, Math.toRadians(180)))
-                        .lineToConstantHeading(new Vector2d(-40, 40))
-                        .lineToConstantHeading(new Vector2d(-35, 30))
+                        .lineToLinearHeading(new Pose2d(-34.5, 42.00, Math.toRadians(160)))
+                        .lineToConstantHeading(new Vector2d(-34.5, 40))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(-44, 27))
-                        .lineToConstantHeading(new Vector2d(-36, 10))
-                        .lineToConstantHeading(new Vector2d(13, 10))
-                        .lineToLinearHeading(new Pose2d(54, 57, Math.toRadians(90)))
+                        .lineToLinearHeading(new Pose2d(-42, 58, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(48, 58))
+
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0);
@@ -101,11 +99,21 @@ public class BlueAutoFront extends OpMode {
 
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
-                        .lineToLinearHeading(new Pose2d(-36.00, 37.00, Math.toRadians(180)))
-                        .lineToConstantHeading(new Vector2d(-44, 27))
-                        .lineToConstantHeading(new Vector2d(-36, 10))
-                        .lineToConstantHeading(new Vector2d(13, 10))
-                        .lineToLinearHeading(new Pose2d(60, 50, Math.toRadians(90)))
+                        .lineToConstantHeading(new Vector2d(-42.00, 61.00))
+                        .lineToConstantHeading(new Vector2d(-42, 31))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(0);
+                        })
+
+                        .lineToConstantHeading(new Vector2d(-42, 43))
+                        .lineToLinearHeading(new Pose2d(-42, 58, Math.toRadians(0)))
+                        .lineToConstantHeading(new Vector2d(48, 58))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0);
+                        })
+
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -116,13 +124,24 @@ public class BlueAutoFront extends OpMode {
                 visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
 
-                Pose2d startPoseM = new Pose2d(-36, 61, Math.toRadians(90));
-
+                Pose2d startPoseM = new Pose2d(-34.5, 61, Math.toRadians(90));
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
 
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(0);
+                        })
+
+                    .lineToConstantHeading(new Vector2d(-34.5, 34))
+                    .lineToLinearHeading(new Pose2d(-42, 58, Math.toRadians(180)))
+                    .lineToConstantHeading(new Vector2d(48, 58))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0);
+                        })
 
                         .build();
+
 
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
