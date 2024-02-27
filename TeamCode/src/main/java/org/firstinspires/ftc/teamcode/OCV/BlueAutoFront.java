@@ -15,7 +15,8 @@ public class BlueAutoFront extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
-    private Servo backPixelDrop =null;
+    private Servo backPixelDrop = null;
+    private Servo p3DropSOFHSIEHfi = null;
     int positionDetect = 0;
 
     @Override
@@ -128,18 +129,13 @@ public class BlueAutoFront extends OpMode {
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
 
-                        .addDisplacementMarker(() -> {
+                        .addDisplacementMarker(14, () -> {
                             pixelDrop.setPosition(0);
                         })
 
+                    .lineToConstantHeading(new Vector2d(-34.5, 29))
                     .lineToConstantHeading(new Vector2d(-34.5, 34))
-                    .lineToLinearHeading(new Pose2d(-42, 58, Math.toRadians(180)))
-                    .lineToConstantHeading(new Vector2d(48, 58))
-
-                        .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0);
-                        })
-
+                    .lineToConstantHeading(new Vector2d(-34.5, 58))
                         .build();
 
 
