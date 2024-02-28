@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
-public class RedAutoFront extends OpMode {
+public class OLDRedAutoFront extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
@@ -67,7 +67,7 @@ public class RedAutoFront extends OpMode {
                 visionPortal.stopStreaming();
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-                Pose2d startPoseL = new Pose2d(-34.5,-61, Math.toRadians(-90));
+                Pose2d startPoseL = new Pose2d(-34.5,-61, Math.toRadians(90));
 
                 drive.setPoseEstimate(startPoseL);
 
@@ -81,6 +81,13 @@ public class RedAutoFront extends OpMode {
                         })
 
                         .lineToLinearHeading(new Pose2d(-34.5, -58, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(12, -58))
+                        .lineToLinearHeading(new Pose2d(51, -25, Math.toRadians(180)))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(1);
+                        })
+
                         .build();
 
                 drive.followTrajectorySequence(trajL);
@@ -92,7 +99,7 @@ public class RedAutoFront extends OpMode {
                 visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
 
-                Pose2d startPoseR = new Pose2d(-34.5, -61, Math.toRadians(-90));
+                Pose2d startPoseR = new Pose2d(-34.5, 61, Math.toRadians(90));
 
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
@@ -103,7 +110,8 @@ public class RedAutoFront extends OpMode {
                             pixelDrop.setPosition(1);
                         })
 
-                        .lineToConstantHeading(new Vector2d(-20, -32))
+                        .lineToConstantHeading(new Vector2d(10, -32))
+                        .splineTo(new Vector2d(50, -60), Math.toRadians(0))
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -113,7 +121,7 @@ public class RedAutoFront extends OpMode {
                 visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
 
-                Pose2d startPoseM = new Pose2d(-34.5, -61, Math.toRadians(-90));
+                Pose2d startPoseM = new Pose2d(-34.5, 61, Math.toRadians(90));
 
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
@@ -124,7 +132,9 @@ public class RedAutoFront extends OpMode {
                         })
 
                         .lineToConstantHeading(new Vector2d(-36, -13))
-                        .lineToLinearHeading(new Pose2d(-20, -13, Math.toRadians(0)))
+                        .lineToLinearHeading(new Pose2d(10, -13, Math.toRadians(0)))
+                        .splineTo(new Vector2d(50, -60), Math.toRadians(0))
+
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
