@@ -73,10 +73,10 @@ public class RedBACKDROPAuto extends OpMode {
                 drive.setPoseEstimate(startPoseL);
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToConstantHeading(new Vector2d(13, -41))
-                        .lineToLinearHeading(new Pose2d(13.5, -40, Math.toRadians(-35)))
+                        .lineToConstantHeading(new Vector2d(13, -41.5))
+                        .lineToLinearHeading(new Pose2d(13.5, -40.5, Math.toRadians(-35)))
 
-                        .addDisplacementMarker(7,() -> {
+                        .addDisplacementMarker(17.6,() -> {
                             pixelDrop.setPosition(0);
                         })
 
@@ -87,12 +87,12 @@ public class RedBACKDROPAuto extends OpMode {
                         })
 
                         .lineToLinearHeading(new Pose2d(40, -23, Math.toRadians(180)))
-                        .lineToConstantHeading(new Vector2d(51, -23))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(1);
+                            backPixelDrop.setPosition(0.8);
                         })
 
+                        .lineToConstantHeading(new Vector2d(51, -23))
                         .lineToConstantHeading(new Vector2d(49.5, -23))
                         .lineToConstantHeading(new Vector2d(45, -23))
                         .lineToConstantHeading(new Vector2d(45, -58))
@@ -113,29 +113,27 @@ public class RedBACKDROPAuto extends OpMode {
 
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
-                        .lineToConstantHeading(new Vector2d(26.00, -60.00))
-                        .lineToConstantHeading(new Vector2d(26.00, -42.00))
+                        .lineToConstantHeading(new Vector2d(27.00, -58.00))
+                        .lineToConstantHeading(new Vector2d(27, -35))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(27.00, -45.00))
+                        .lineToConstantHeading(new Vector2d(27.00, -42.00))
+                        .lineToConstantHeading(new Vector2d(28.00, -45.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
 
-                        .lineToLinearHeading(new Pose2d(40, -35, Math.toRadians(180)))
-                        .lineToConstantHeading(new Vector2d(51.00, -35))
-
+                        .lineToLinearHeading(new Pose2d(41, -34, Math.toRadians(180)))
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(1);
+                            backPixelDrop.setPosition(0.8);
                         })
-
-                        .lineToConstantHeading(new Vector2d(49, -35))
-                        .lineToConstantHeading(new Vector2d(45, -35))
-                        .lineToConstantHeading(new Vector2d(45, -58))
+                        .lineToConstantHeading(new Vector2d(50, -34.5))
+                        .lineToConstantHeading(new Vector2d(46, -34.5))
+                        .lineToConstantHeading(new Vector2d(46, -58))
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -150,10 +148,10 @@ public class RedBACKDROPAuto extends OpMode {
 
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
-                        .lineToConstantHeading(new Vector2d(11.00, -33.00))
-                        .lineToConstantHeading(new Vector2d(11.00, -38))
+                        .lineToConstantHeading(new Vector2d(15.00, -33.00))
+                        .lineToConstantHeading(new Vector2d(15.00, -38))
 
-                        .addDisplacementMarker(7,() -> {
+                        .addDisplacementMarker(2,() -> {
                             pixelDrop.setPosition(0);
                         })
 
@@ -163,12 +161,11 @@ public class RedBACKDROPAuto extends OpMode {
                             pixelDrop.setPosition(1);
                         })
 
-                        .lineToConstantHeading(new Vector2d(51.00, -28))
-
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(1);
+                            backPixelDrop.setPosition(0.78);
                         })
 
+                        .lineToConstantHeading(new Vector2d(51.00, -28))
                         .lineToConstantHeading(new Vector2d(49, -28))
                         .lineToConstantHeading(new Vector2d(45, -28))
                         .lineToConstantHeading(new Vector2d(45, -58))
