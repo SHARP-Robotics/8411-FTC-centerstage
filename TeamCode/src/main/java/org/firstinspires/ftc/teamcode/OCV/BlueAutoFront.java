@@ -69,14 +69,16 @@ public class BlueAutoFront extends OpMode {
 
                 Pose2d startPoseL = new Pose2d(-36, 61, Math.toRadians(90));
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
+                        .lineToConstantHeading(new Vector2d(-40, 56))
                         .lineToLinearHeading(new Pose2d(-34.5, 42.00, Math.toRadians(160)))
-                        .lineToConstantHeading(new Vector2d(-34.5, 40))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
+                        .lineToConstantHeading(new Vector2d(-34.5, 40))
                         .lineToLinearHeading(new Pose2d(-42, 58, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(60, 58))
                         .build();
 
                 drive.followTrajectorySequence(trajL);
@@ -95,12 +97,14 @@ public class BlueAutoFront extends OpMode {
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
                         .lineToConstantHeading(new Vector2d(-42.00, 61.00))
                         .lineToConstantHeading(new Vector2d(-42, 31))
+                        .lineToConstantHeading(new Vector2d(-42, 43))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(-42, 43))
+                        .lineToLinearHeading(new Pose2d(-30, 59, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(60, 59))
                         .build();
 
 
@@ -116,12 +120,15 @@ public class BlueAutoFront extends OpMode {
                 Pose2d startPoseM = new Pose2d(-34.5, 61, Math.toRadians(90));
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
+                        .lineToConstantHeading(new Vector2d(-36, 29))
+                        .lineToConstantHeading(new Vector2d(-36, 36))
 
                         .addDisplacementMarker(14, () -> {
                             pixelDrop.setPosition(0);
                         })
 
-                    .lineToConstantHeading(new Vector2d(-34.5, 29))
+                        .lineToLinearHeading(new Pose2d(-36, 58, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(60, 58))
                         .build();
 
 
