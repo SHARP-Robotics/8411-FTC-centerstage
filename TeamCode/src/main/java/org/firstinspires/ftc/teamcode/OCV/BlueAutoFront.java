@@ -65,9 +65,7 @@ public class BlueAutoFront extends OpMode {
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 visionPortal.stopStreaming();
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
                 Pose2d startPoseL = new Pose2d(-36, 61, Math.toRadians(90));
-
                 drive.setPoseEstimate(startPoseL);
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
                         .lineToConstantHeading(new Vector2d(-36, 51))

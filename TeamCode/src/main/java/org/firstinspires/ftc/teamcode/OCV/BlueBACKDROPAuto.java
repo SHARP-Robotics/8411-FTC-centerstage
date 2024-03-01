@@ -81,14 +81,19 @@ public class BlueBACKDROPAuto extends OpMode {
                             pixelDrop.setPosition(1);
                         })
                         .lineToLinearHeading(new Pose2d(40.00, 41.5, Math.toRadians(-180)))
-                        .lineToConstantHeading(new Vector2d(50.0, 41.5))
+                        .lineToConstantHeading(new Vector2d(49.75, 41.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0.9);
+                            backPixelDrop.setPosition(0.79);
                         })
 
                         .lineToConstantHeading(new Vector2d(46, 41.5))
                         .lineToConstantHeading(new Vector2d(46, 58))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(1);
+                        })
+
                         .build();
 
                 drive.followTrajectorySequence(trajL);
@@ -117,15 +122,19 @@ public class BlueBACKDROPAuto extends OpMode {
                         })
 
                         .lineToLinearHeading(new Pose2d(40.00, 33.00, Math.toRadians(-180)))
-                        .lineToConstantHeading(new Vector2d(49, 33))
+                        .lineToConstantHeading(new Vector2d(49.75, 33))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0.75);
+                            backPixelDrop.setPosition(0.79);
                         })
 
-                        .lineToConstantHeading(new Vector2d(50.5, 33))
+                        .lineToConstantHeading(new Vector2d(50, 33))
                         .lineToConstantHeading(new Vector2d(45, 33))
                         .lineToConstantHeading(new Vector2d(45, 58))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(1);
+                        })
 
                         .build();
                 drive.followTrajectorySequence(trajR);
@@ -152,14 +161,18 @@ public class BlueBACKDROPAuto extends OpMode {
                             pixelDrop.setPosition(1);
                         })
                         .lineToLinearHeading(new Pose2d(40.00, 34.5, Math.toRadians(-180)))
-                        .lineToConstantHeading(new Vector2d(50.00, 34.5))
+                        .lineToConstantHeading(new Vector2d(49.75, 34.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(1);
+                            backPixelDrop.setPosition(0.79);
                         })
 
                         .lineToConstantHeading(new Vector2d(46, 34.5))
                         .lineToConstantHeading(new Vector2d(46, 58))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(1);
+                        })
 
                         .build();
                 drive.followTrajectorySequence(trajM);
