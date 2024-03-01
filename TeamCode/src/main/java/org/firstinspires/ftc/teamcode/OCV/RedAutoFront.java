@@ -67,29 +67,31 @@ public class RedAutoFront extends OpMode {
                 visionPortal.stopStreaming();
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-                Pose2d startPoseL = new Pose2d(-34.5,-61, Math.toRadians(-90));
+                Pose2d startPoseL = new Pose2d(-36,-61, Math.toRadians(-90));
 
                 drive.setPoseEstimate(startPoseL);
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToConstantHeading(new Vector2d(-43.00, -61.00))
-                        .lineToConstantHeading(new Vector2d(-43, -30))
-                        .lineToConstantHeading(new Vector2d(-43, -40))
-
-                        .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(1);
-                        })
+                        .lineToConstantHeading(new Vector2d(-52.00, -59.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
+                        .lineToConstantHeading(new Vector2d(-52, -44))
+                        .lineToConstantHeading(new Vector2d(-52, -42))
                         .lineToConstantHeading(new Vector2d(-34.5, -59.00))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(1);
+                        })
+
                         .build();
 
                 drive.followTrajectorySequence(trajL);
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
+                positionDetect = 0;
                 break;
             case 3:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -100,23 +102,25 @@ public class RedAutoFront extends OpMode {
 
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
-                        .lineToConstantHeading(new Vector2d(-43, -60))
-                        .lineToConstantHeading(new Vector2d(-43, -35))
-                        .lineToLinearHeading(new Pose2d(-30.00, -35.00, Math.toRadians(180)))
-                        .lineToConstantHeading(new Vector2d(-35, -35))
-
-                        .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(1);
-                        })
+                        .lineToConstantHeading(new Vector2d(-34.5, -51))
+                        .lineToConstantHeading(new Vector2d(-35.1, -38))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(-34.5, -59.00))
+                        .lineToLinearHeading(new Pose2d(-35.0, -38.00, Math.toRadians(220)))
+                        .lineToConstantHeading(new Vector2d(-40, -35))
+                        .lineToConstantHeading(new Vector2d(-38, -55.00))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(1);
+                        })
+
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
+                positionDetect = 0;
                 break;
             case 2:
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -127,21 +131,21 @@ public class RedAutoFront extends OpMode {
 
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
-                        .lineToConstantHeading(new Vector2d(-34.500, -30.00))
-                        .lineToConstantHeading(new Vector2d(-34.4, -35.00))
-                        .lineToConstantHeading(new Vector2d(-34.5, -59.00))
+                        .lineToConstantHeading(new Vector2d(-34.5, -36.00))
+                        .lineToConstantHeading(new Vector2d(-34.5, -55.00))
+
+                        .addDisplacementMarker(9, () -> {
+                            pixelDrop.setPosition(0);
+                        })
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
 
-                        .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
-                        })
-
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
+                positionDetect = 0;
                 break;
             case 0:
                 break;
