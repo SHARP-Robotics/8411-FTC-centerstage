@@ -122,11 +122,11 @@ public class VroomVroom extends LinearOpMode {
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
         bigArm.setDirection(DcMotor.Direction.FORWARD);
         ramp.setDirection(DcMotorEx.Direction.FORWARD);
-        spinPixel.setDirection(DcMotorEx.Direction.REVERSE);
+        spinPixel.setDirection(DcMotorEx.Direction.FORWARD);
         hang.setDirection(DcMotorEx.Direction.FORWARD);
         // panUD.setDirection(Servo.Direction.REVERSE);
-        panUD.setDirection(CRServo.Direction.REVERSE);
-        panUD2.setDirection(CRServo.Direction.FORWARD);
+        panUD.setDirection(CRServo.Direction.FORWARD);
+        panUD2.setDirection(CRServo.Direction.REVERSE);
         planeOpen.setDirection(CRServo.Direction.FORWARD);
         pixelDrop.setDirection(Servo.Direction.FORWARD);
 
@@ -208,21 +208,17 @@ public class VroomVroom extends LinearOpMode {
                 planePower = 0;
             }
 
-            // Ramp
+            // Spin
             if(gamepad2.right_trigger > 0.3){
-                spinPower = 0.8;
+                spinPower = 1.0;
             } else if(gamepad2.left_trigger > 0.3){
-                spinPower = -0.8;
+                spinPower = -1.0;
             } else if(gamepad2.left_trigger < 0.3 || gamepad2.right_trigger < 0.3) {
                 spinPower = 0.0;
             }
 
             // Pixel Drop
-            if(gamepad1.a) {
-                pixelDropPos = 0;
-            } else if (gamepad1.y) {
-                pixelDropPos = 1;
-            }
+            pixelDropPos= 1;
 
             // This is test code:
             //
