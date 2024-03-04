@@ -4,6 +4,9 @@
 *This was written after our robotics season ended* \
 This was my first year coding(I was the main coder for our team) we attended 3 scrimmages, 2 AL Cups, and a TN State Competition. We ended up finishing 2nd for the qualifying matches in the State comp, (TechNova was in 1st big shout out to their insane robot). We had a 50 point autonomous, could hang, somewhat reliably shoot our airplane, and a decent TeleOp. This code was kinda janky to be honest. Hopefully next year I can do better.
 
+UPDATE:
+We are now going to worlds due to some other circumstances with the team that won!
+
 ### Welcome
 Welcome to the code repository of Team 8411 SHARP for the FTC (FIRST Tech Challenge) Centerstage 2023-2024 robotics competition! This repository contains the source code for our robot's control systems, autonomous routines, and teleoperation functionalities. Our team is dedicated to innovation, collaboration, and excellence in robotics.
 
