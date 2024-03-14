@@ -95,7 +95,7 @@ public class RedBACKDROPAuto extends OpMode {
                         .lineToConstantHeading(new Vector2d(51, -23))
                         .lineToConstantHeading(new Vector2d(49.5, -23))
                         .lineToConstantHeading(new Vector2d(45, -23))
-                        .lineToConstantHeading(new Vector2d(45, -58))
+                        .lineToConstantHeading(new Vector2d(45, -60))
 
                         .build();
 
@@ -133,7 +133,7 @@ public class RedBACKDROPAuto extends OpMode {
                         })
                         .lineToConstantHeading(new Vector2d(50, -34.5))
                         .lineToConstantHeading(new Vector2d(46, -34.5))
-                        .lineToConstantHeading(new Vector2d(46, -58))
+                        .lineToConstantHeading(new Vector2d(46, -60))
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -146,6 +146,7 @@ public class RedBACKDROPAuto extends OpMode {
 
                 Pose2d startPoseM = new Pose2d(11, -61, Math.toRadians(-90));
 
+                // enderman
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
                         .lineToConstantHeading(new Vector2d(15.00, -33.00))
@@ -168,7 +169,7 @@ public class RedBACKDROPAuto extends OpMode {
                         .lineToConstantHeading(new Vector2d(51.00, -28))
                         .lineToConstantHeading(new Vector2d(49, -28))
                         .lineToConstantHeading(new Vector2d(45, -28))
-                        .lineToConstantHeading(new Vector2d(45, -58))
+                        .lineToConstantHeading(new Vector2d(45, -60))
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
