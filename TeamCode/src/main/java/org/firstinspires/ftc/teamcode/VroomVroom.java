@@ -27,6 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -86,6 +87,8 @@ public class VroomVroom extends LinearOpMode {
     private CRServo panUD2 = null;
     private CRServo planeOpen = null;
     private Servo pixelDrop = null;
+    private Servo clawL = null;
+    private Servo clawR = null;
     @Override
     public void runOpMode() {
 
@@ -105,6 +108,8 @@ public class VroomVroom extends LinearOpMode {
         panUD2 = hardwareMap.get(CRServo.class, "pan2");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
         pixelDrop = hardwareMap.get(Servo.class, "p3Drop");
+        clawL = hardwareMap.get(Servo.class, "clawServoL");
+        clawR = hardwareMap.get(Servo.class, "clawServoR");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -151,6 +156,8 @@ public class VroomVroom extends LinearOpMode {
             double panServoPower= 0;
             double planePower;
             double spinPower = 0;
+            double clawLPos = 0;
+            double clawRPos = 0;
 
 
 
@@ -184,37 +191,27 @@ public class VroomVroom extends LinearOpMode {
             {
                 panServoPower = -1;
             }
-            // Uncomment for servo mode
-          /*  if(gamepad2.dpad_up) {
-                if (panCd.seconds() < 5) {
-                    return;
-                }
-                panCd.reset();
-                panServoPos = 1.0;
+
+            // Claw R and L
+            // Claw L
+            if(gamepad2.right_trigger > 0.3){
+                clawLPos = 0.5;
+            } else if (gamepad2.right_bumper) {
+                clawLPos = 0.8;
             }
-            if (gamepad2.dpad_down) {
-                if(panCd.seconds() < 5) {
-                    return;
-                }
-                panCd.reset();
-                panServoPos = 0;
+            // Claw R
+            if(gamepad2.left_trigger > 0.3){
+                clawRPos = 0.5;
+            } else if (gamepad2.left_bumper) {
+                //Elvis presly
+                clawRPos = 0.8;
             }
 
-           */
             // Plane
             if(gamepad1.right_bumper && gamepad1.left_bumper) {
                 planePower = -1;
             } else {
                 planePower = 0;
-            }
-
-            // Spin
-            if(gamepad2.right_trigger > 0.3){
-                spinPower = 1.0;
-            } else if(gamepad2.left_trigger > 0.3){
-                spinPower = -1.0;
-            } else if(gamepad2.left_trigger < 0.3 || gamepad2.right_trigger < 0.3) {
-                spinPower = 0.0;
             }
 
             // Pixel Drop
@@ -254,6 +251,8 @@ public class VroomVroom extends LinearOpMode {
             panUD2.setPower(panServoPower);
             planeOpen.setPower(planePower);
             pixelDrop.setPosition(pixelDropPos);
+            clawL.setPosition(clawLPos);
+            clawR.setPosition(clawRPos);
 
 
 

@@ -23,7 +23,7 @@ public class MeepMeepy {
                         .lineToConstantHeading(new Vector2d(51.00, -28))
                         .lineToConstantHeading(new Vector2d(49, -28))
                         .lineToConstantHeading(new Vector2d(45, -28))
-                        .lineToConstantHeading(new Vector2d(45, -58))
+                        .lineToConstantHeading(new Vector2d(60, -60))
                         .build());
 
 
