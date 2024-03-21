@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsys;
 
 
 /*
@@ -81,12 +82,14 @@ public class VroomVroom extends LinearOpMode {
     private DcMotorEx ramp = null;
     private DcMotor spinPixel = null;
     private DcMotorEx hang = null;
-    private CRServo panUD = null;
+    private Servo panUD = null;
     private CRServo panUD2 = null;
     private CRServo planeOpen = null;
     private Servo pixelDrop = null;
     private Servo clawL = null;
     private Servo clawR = null;
+
+    private IntakeSubsys intakeSubsys;
     @Override
     public void runOpMode() {
 
@@ -102,12 +105,13 @@ public class VroomVroom extends LinearOpMode {
         spinPixel = hardwareMap.get(DcMotorEx.class, "spin");
         hang = hardwareMap.get(DcMotorEx.class, "hanging");
         // panUD = hardwareMap.get(Servo.class, "pan");
-        panUD = hardwareMap.get(CRServo.class, "pan");
+        panUD = hardwareMap.get(Servo.class, "pan");
         panUD2 = hardwareMap.get(CRServo.class, "pan2");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
         pixelDrop = hardwareMap.get(Servo.class, "p3Drop");
         clawL = hardwareMap.get(Servo.class, "clawServoL");
         clawR = hardwareMap.get(Servo.class, "clawServoR");
+        intakeSubsys = new IntakeSubsys(hardwareMap);
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -127,8 +131,7 @@ public class VroomVroom extends LinearOpMode {
         ramp.setDirection(DcMotorEx.Direction.FORWARD);
         spinPixel.setDirection(DcMotorEx.Direction.FORWARD);
         hang.setDirection(DcMotorEx.Direction.FORWARD);
-        // panUD.setDirection(Servo.Direction.REVERSE);
-        panUD.setDirection(CRServo.Direction.FORWARD);
+        panUD.setDirection(Servo.Direction.FORWARD);
         panUD2.setDirection(CRServo.Direction.REVERSE);
         planeOpen.setDirection(CRServo.Direction.FORWARD);
         pixelDrop.setDirection(Servo.Direction.FORWARD);
@@ -150,7 +153,7 @@ public class VroomVroom extends LinearOpMode {
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_stick_x;
-            double panServoPos = 0;
+            double panServoPos = panUD.getPosition();
             double panServoPower= 0;
             double planePower;
             double spinPower = 0;
@@ -180,17 +183,28 @@ public class VroomVroom extends LinearOpMode {
                 rightBackPower  /= max;
             }
 
-            // Servo controlling power???
-            // idk if this is the right way to do this but it wrks sooo
-            // Pan up and down
-            if(gamepad2.dpad_up) {
-                panServoPower = 1;
-            } if(gamepad2.dpad_down)
-            {
-                panServoPower = -1;
+            // Using the Intake Subsystem
+            if(gamepad2.a){
+                intakeSubsys.prepareToDrive();
+            }
+            if(gamepad2.y){
+                intakeSubsys.prepareToScore();
+            }
+            if(gamepad2.b){
+                intakeSubsys.prepareToIntake();
+            }
+            if(gamepad2.x){
+                intakeSubsys.grabPixels();
             }
 
-            // Claw R and L
+            // Claw up and down
+            if(gamepad2.dpad_up) {
+                panServoPos = 1;
+            } if(gamepad2.dpad_down)
+            {
+                panServoPos = 0;
+            }
+
             // Claw L
             if(gamepad2.right_trigger > 0.3){
                 clawLPos = 0.8;
@@ -237,15 +251,11 @@ public class VroomVroom extends LinearOpMode {
             rightFrontDrive.setPower(rightFrontPower * 0.65);
             leftBackDrive.setPower(leftBackPower * 0.65);
             rightBackDrive.setPower(rightBackPower * 0.65);
-            bigArm.setPower(gamepad2.y ? 1.0 : 0);
-            bigArm.setPower(gamepad2.a ? -0.7 : 0);
-            ramp.setPower(gamepad2.b ? 1.0 : 0);
-            ramp.setPower(gamepad2.x ? -1.0 : 0);
-            spinPixel.setPower(spinPower);
+            bigArm.setPower(gamepad2.dpad_left ? 1.0 : 0);
+            bigArm.setPower(gamepad2.dpad_right ? -0.7 : 0);
             hang.setPower(gamepad1.dpad_up ? 1.0 : 0);
             hang.setPower(gamepad1.dpad_down ? -1.0 : 0);
-            // panUD.setPosition(panServoPos);
-            panUD.setPower(panServoPower);
+            panUD.setPosition(panServoPos);
             panUD2.setPower(panServoPower);
             planeOpen.setPower(planePower);
             pixelDrop.setPosition(pixelDropPos);
