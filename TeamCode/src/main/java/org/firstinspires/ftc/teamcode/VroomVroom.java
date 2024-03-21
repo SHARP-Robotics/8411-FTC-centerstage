@@ -3,7 +3,6 @@
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
  * the following conditions are met:
- *
  * Redistributions of source code must retain the above copyright notice, this list
  * of conditions and the following disclaimer.
  *
@@ -82,7 +81,6 @@ public class VroomVroom extends LinearOpMode {
     private DcMotorEx ramp = null;
     private DcMotor spinPixel = null;
     private DcMotorEx hang = null;
-    // private Servo panUD = null;
     private CRServo panUD = null;
     private CRServo panUD2 = null;
     private CRServo planeOpen = null;
@@ -156,8 +154,8 @@ public class VroomVroom extends LinearOpMode {
             double panServoPower= 0;
             double planePower;
             double spinPower = 0;
-            double clawLPos = 0;
-            double clawRPos = 0;
+            double clawLPos = clawL.getPosition();
+            double clawRPos = clawR.getPosition();
 
 
 
@@ -195,9 +193,9 @@ public class VroomVroom extends LinearOpMode {
             // Claw R and L
             // Claw L
             if(gamepad2.right_trigger > 0.3){
-                clawLPos = 0.5;
-            } else if (gamepad2.right_bumper) {
                 clawLPos = 0.8;
+            } else if (gamepad2.right_bumper) {
+                clawLPos = 0.5;
             }
             // Claw R
             if(gamepad2.left_trigger > 0.3){
@@ -265,6 +263,7 @@ public class VroomVroom extends LinearOpMode {
             telemetry.addData("Pan Up/Down","%1f", panServoPos);
             telemetry.addData("Right Trigger", "%1f", gamepad2.right_trigger);
             telemetry.addData("Pixel Drop Pos", "%1f", pixelDropPos);
+            telemetry.addData("Claw Pos (L then R)", "%1f, %1f", clawLPos,clawRPos);
 
             telemetry.update();
         }
