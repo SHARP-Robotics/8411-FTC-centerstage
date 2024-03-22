@@ -15,9 +15,15 @@ public class MeepMeepy {
         RoadRunnerBotEntity myFirstBot = new DefaultBotBuilder(meepMeep)
                 // We set this bot to be blue
                 .setColorScheme(new ColorSchemeBlueDark())
-                .setConstraints(20, 20, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(30, 30, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(11, -61, Math.toRadians(-90.00)))
-
+                        .lineToConstantHeading(new Vector2d(15.00, -33.00))
+                        .lineToConstantHeading(new Vector2d(15.00, -38))
+                        .lineToLinearHeading(new Pose2d(40, -28, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(51.00, -28))
+                        .lineToConstantHeading(new Vector2d(49, -28))
+                        .lineToConstantHeading(new Vector2d(45, -28))
+                        .lineToConstantHeading(new Vector2d(60, -60))
                         .build());
 
 

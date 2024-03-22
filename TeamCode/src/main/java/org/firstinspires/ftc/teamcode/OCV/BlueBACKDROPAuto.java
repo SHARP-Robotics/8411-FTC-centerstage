@@ -88,7 +88,7 @@ public class BlueBACKDROPAuto extends OpMode {
                         })
 
                         .lineToConstantHeading(new Vector2d(46, 41.5))
-                        .lineToConstantHeading(new Vector2d(46, 58))
+                        .lineToConstantHeading(new Vector2d(46, 60))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
@@ -130,7 +130,7 @@ public class BlueBACKDROPAuto extends OpMode {
 
                         .lineToConstantHeading(new Vector2d(50, 33))
                         .lineToConstantHeading(new Vector2d(45, 33))
-                        .lineToConstantHeading(new Vector2d(45, 58))
+                        .lineToConstantHeading(new Vector2d(45, 60))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
@@ -168,7 +168,7 @@ public class BlueBACKDROPAuto extends OpMode {
                         })
 
                         .lineToConstantHeading(new Vector2d(46, 34.5))
-                        .lineToConstantHeading(new Vector2d(46, 58))
+                        .lineToConstantHeading(new Vector2d(46, 60))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
