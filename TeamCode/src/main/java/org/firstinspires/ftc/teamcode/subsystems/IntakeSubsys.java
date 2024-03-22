@@ -63,7 +63,7 @@ public class IntakeSubsys {
 
         intakeClawServoLeft = hardwareMap.get(ServoImplEx.class, "clawServoL");
         intakeClawServoRight = hardwareMap.get(ServoImplEx.class, "clawServoR");
-        intakePivotServo = hardwareMap.get(ServoImplEx.class, "panUD");
+        intakePivotServo = hardwareMap.get(ServoImplEx.class, "pan");
     }
 
     public void initialize(boolean isAuto) {
