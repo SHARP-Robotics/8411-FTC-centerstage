@@ -26,8 +26,8 @@ public class IntakeSubsys {
     public static double INTAKE_CLAW_SERVO_LEFT_OPEN = 0.4;
     public static double INTAKE_CLAW_SERVO_RIGHT_OPEN = 0.4;
 
-    public static double INTAKE_CLAW_SERVO_LEFT_CLOSE = 0.2;
-    public static double INTAKE_CLAW_SERVO_RIGHT_CLOSE = 0.2;
+    public static double INTAKE_CLAW_SERVO_LEFT_CLOSE = 0.5;
+    public static double INTAKE_CLAW_SERVO_RIGHT_CLOSE = 0.8;
 
     public static double INTAKE_PIVOT_SERVO_GRAB = 0.2;
     public static double INTAKE_PIVOT_SERVO_FOLD = 0.3;
@@ -56,7 +56,7 @@ public class IntakeSubsys {
 
         // change the direction accordingly, make sure the position encoder value is UP
         // ------------------------------------------------------------
-        intakeArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeArmMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
