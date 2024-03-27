@@ -1,33 +1,30 @@
 # 8411 SHARP Robotics Team Code Repository
 
-### How it went
-*This was written after our robotics season ended* \
-This was my first year coding(I was the main coder for our team) we attended 3 scrimmages, 2 AL Cups, and a TN State Competition. We ended up finishing 2nd for the qualifying matches in the State comp, (TechNova was in 1st big shout out to their insane robot). We had a 50 point autonomous, could hang, somewhat reliably shoot our airplane, and a decent TeleOp. This code was kinda janky to be honest. Hopefully next year I can do better.
+(As of TN Comp)
+Our robotics season has wrapped up, and it's time to review our performance. As a first-time coder for the team, I led the charge through 3 scrimmages, 2 AL Cups, and the TN State Competition.
 
-UPDATE:
-We are now going to worlds due to some other circumstances with the team that won!
+At the State comp, we snagged 2nd place in qualifying matches, trailing behind TechNova's impressive robot. Our robot had a 50-point autonomous mode, solid hanging skills, and a decent TeleOp. Our code was a bit rough around the edges, but it got the job done.
+
+UPDATE: Some unexpected circumstances bumped us up to Worlds
 
 ### Welcome
-Welcome to the code repository of Team 8411 SHARP for the FTC (FIRST Tech Challenge) Centerstage 2023-2024 robotics competition! This repository contains the source code for our robot's control systems, autonomous routines, and teleoperation functionalities. Our team is dedicated to innovation, collaboration, and excellence in robotics.
+
+Welcome to our code repository for the FTC Centerstage 2023-2024 robotics competition! Here, you'll find everything from autonomous navigation to teleoperation control. Our team focuses on practicality, functionality, and continuous improvement.
 
 ### Key Features:
-1. Autonomous Navigation: Efficient algorithms for autonomous movement and task completion.
-2. Teleoperation Control: Precise controls for driver-operated maneuvers and game strategy execution.
-3. Sensor Integration: Integration of various sensors for accurate navigation and decision-making.
-4. Modular Architecture: Organized codebase with modular components for easy maintenance and scalability.
+
+- Autonomous Navigation: We've got efficient algorithms for moving around and completing tasks.
+- Teleoperation Control: Precise controls for manual maneuvers and game strategy.
+- Sensor Integration: Using various sensors to navigate accurately and make decisions.
 
 ### How to Use:
 
-Clone or download the repository to your local machine.
-Explore and modify the code to suit your team's requirements.
-Submit pull requests for improvements, bug fixes, and new features.
+Just clone or download the repository, tweak the code to fit your needs, and submit pull requests for improvements or bug fixes.
 
 ### Contributions:
 
-We welcome contributions from the community to enhance the functionality and reliability of our codebase. If you have ideas, suggestions, or bug fixes, please feel free to open an issue or submit a pull request.
+We're open to contributions from the community. Got ideas or fixes? Feel free to reach out or submit a pull request.
 
 ### Contact Us:
 
-For inquiries, collaboration opportunities, or questions about our code, please reach out to me at yasha@wds4u.com.
-
-Let's innovate, collaborate, and excel together in the exciting world of robotics!
+Questions or collaboration opportunities? Send me an email at yasha@wds4u.com.
