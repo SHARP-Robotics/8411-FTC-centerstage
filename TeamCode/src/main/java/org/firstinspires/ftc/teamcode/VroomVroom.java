@@ -127,7 +127,7 @@ public class VroomVroom extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        bigArm.setDirection(DcMotor.Direction.FORWARD);
+        bigArm.setDirection(DcMotor.Direction.REVERSE);
         ramp.setDirection(DcMotorEx.Direction.FORWARD);
         spinPixel.setDirection(DcMotorEx.Direction.FORWARD);
         hang.setDirection(DcMotorEx.Direction.FORWARD);
@@ -135,6 +135,7 @@ public class VroomVroom extends LinearOpMode {
         panUD2.setDirection(CRServo.Direction.REVERSE);
         planeOpen.setDirection(CRServo.Direction.FORWARD);
         pixelDrop.setDirection(Servo.Direction.FORWARD);
+        // bigArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
 
@@ -153,12 +154,13 @@ public class VroomVroom extends LinearOpMode {
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_stick_x;
-            double panServoPos = panUD.getPosition();
-            double panServoPower= 0;
             double planePower;
+            double panServoPos = panUD.getPosition();
             double spinPower = 0;
             double clawLPos = clawL.getPosition();
             double clawRPos = clawR.getPosition();
+            double armPosition = bigArm.getCurrentPosition();
+            double armPower = 0;
 
 
 
@@ -198,25 +200,29 @@ public class VroomVroom extends LinearOpMode {
             }
 
             // Claw up and down
-            if(gamepad2.dpad_up) {
-                panServoPos = 1;
-            } if(gamepad2.dpad_down)
+            if(gamepad2.dpad_down) {
+                panServoPos = panServoPos + 0.002;
+            } if(gamepad2.dpad_up)
             {
+                panServoPos = panServoPos - 0.002;
+            } if (panServoPos < 0){
                 panServoPos = 0;
+            } if (panServoPos > 1){
+                panServoPos = 1;
             }
 
-            // Claw L
-            if(gamepad2.right_trigger > 0.3){
-                clawLPos = 0.8;
-            } else if (gamepad2.right_bumper) {
-                clawLPos = 0.5;
-            }
             // Claw R
-            if(gamepad2.left_trigger > 0.3){
+            if(gamepad2.right_trigger > 0.3){
+                clawRPos = 0.6;
+            } else if (gamepad2.right_bumper) {
                 clawRPos = 0.5;
+            }
+            // Claw L
+            if(gamepad2.left_trigger > 0.3){
+                clawLPos = 0.23;
             } else if (gamepad2.left_bumper) {
                 //Elvis presly
-                clawRPos = 0.8;
+                clawLPos = 0.4;
             }
 
             // Plane
@@ -225,6 +231,18 @@ public class VroomVroom extends LinearOpMode {
             } else {
                 planePower = 0;
             }
+
+            // Arm test thing
+            if(gamepad2.dpad_left == true && gamepad2.dpad_right == false){
+                armPower = -1;
+            }
+            if (gamepad2.dpad_right == true && gamepad2.dpad_left == false) {
+                armPower = 0.7;
+            }
+            if (gamepad2.dpad_left == false && gamepad2.dpad_right == false){
+                armPower = 0;
+            }
+
 
             // Pixel Drop
             pixelDropPos= 1;
@@ -247,16 +265,16 @@ public class VroomVroom extends LinearOpMode {
             */
 
             // Send calculated power to wheels
-            leftFrontDrive.setPower(leftFrontPower * 0.65);
-            rightFrontDrive.setPower(rightFrontPower * 0.65);
-            leftBackDrive.setPower(leftBackPower * 0.65);
-            rightBackDrive.setPower(rightBackPower * 0.65);
-            bigArm.setPower(gamepad2.dpad_left ? 1.0 : 0);
-            bigArm.setPower(gamepad2.dpad_right ? -0.7 : 0);
+            leftFrontDrive.setPower(leftFrontPower * 0.7);
+            rightFrontDrive.setPower(rightFrontPower * 0.7);
+            leftBackDrive.setPower(leftBackPower * 0.7);
+            rightBackDrive.setPower(rightBackPower * 0.7);
+            bigArm.setPower(armPower);
+          //  bigArm.setPower(gamepad2.dpad_left ? -1.0 : 0);
+          //  bigArm.setPower(gamepad2.dpad_right ? 0.7 : 0);
             hang.setPower(gamepad1.dpad_up ? 1.0 : 0);
             hang.setPower(gamepad1.dpad_down ? -1.0 : 0);
             panUD.setPosition(panServoPos);
-            panUD2.setPower(panServoPower);
             planeOpen.setPower(planePower);
             pixelDrop.setPosition(pixelDropPos);
             clawL.setPosition(clawLPos);
@@ -274,6 +292,7 @@ public class VroomVroom extends LinearOpMode {
             telemetry.addData("Right Trigger", "%1f", gamepad2.right_trigger);
             telemetry.addData("Pixel Drop Pos", "%1f", pixelDropPos);
             telemetry.addData("Claw Pos (L then R)", "%1f, %1f", clawLPos,clawRPos);
+            telemetry.addData("Arm power ting", "%1f", armPower);
 
             telemetry.update();
         }
