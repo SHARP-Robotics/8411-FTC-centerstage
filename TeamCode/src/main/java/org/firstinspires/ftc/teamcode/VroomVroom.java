@@ -36,7 +36,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsys;
+import org.firstinspires.ftc.teamcode.tests.MotorTest;
 
 
 /*
@@ -90,6 +93,8 @@ public class VroomVroom extends LinearOpMode {
     private Servo clawR = null;
 
     private IntakeSubsys intakeSubsys;
+    private long elapsedTime;
+
     @Override
     public void runOpMode() {
 
@@ -111,7 +116,7 @@ public class VroomVroom extends LinearOpMode {
         pixelDrop = hardwareMap.get(Servo.class, "p3Drop");
         clawL = hardwareMap.get(Servo.class, "clawServoL");
         clawR = hardwareMap.get(Servo.class, "clawServoR");
-        intakeSubsys = new IntakeSubsys(hardwareMap);
+        // intakeSubsys = new IntakeSubsys(hardwareMap);
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -145,7 +150,7 @@ public class VroomVroom extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        double pixelDropPos = 0;
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
@@ -155,13 +160,17 @@ public class VroomVroom extends LinearOpMode {
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_stick_x;
             double planePower;
+            double pixelDropPos;
             double panServoPos = panUD.getPosition();
-            double spinPower = 0;
             double clawLPos = clawL.getPosition();
             double clawRPos = clawR.getPosition();
-            double armPosition = bigArm.getCurrentPosition();
             double armPower = 0;
 
+            // Hard stop
+            boolean isSlowDrive = false;
+            boolean isHardStopViable = false;
+            long lastInputTime = 0;
+            final long COASTING_DURATION = 200;
 
 
 
@@ -185,6 +194,37 @@ public class VroomVroom extends LinearOpMode {
                 rightBackPower  /= max;
             }
 
+            /*
+            // Hard Stop bool code
+            if (isSlowDrive = false) {
+                if (leftBackPower > 0.8 || leftFrontPower > 0.8 || rightBackPower > 0.8 || rightFrontPower > 0.8) {
+                    isHardStopViable = true;
+                    lastInputTime = System.currentTimeMillis();
+                } else {
+                    isHardStopViable = false;
+                }
+            }
+
+            if (isHardStopViable) {
+                long elapsedTime = System.currentTimeMillis() - lastInputTime;
+            }
+
+            if (elapsedTime < COASTING_DURATION) {
+                leftFrontDrive.setPower(-leftFrontPower * 0.7);
+                rightFrontDrive.setPower(-rightFrontPower * 0.7);
+                leftBackDrive.setPower(-leftBackPower * 0.7);
+                rightBackDrive.setPower(-rightBackPower * 0.7);
+            } else {
+                leftFrontDrive.setPower(0);
+                rightFrontDrive.setPower(0);
+                leftBackDrive.setPower(0);
+                rightBackDrive.setPower(0);
+                isHardStopViable = false;
+            }
+            */
+
+            // Drivers didn't want to use this
+            /*
             // Using the Intake Subsystem
             if(gamepad2.a){
                 intakeSubsys.prepareToDrive();
@@ -198,8 +238,10 @@ public class VroomVroom extends LinearOpMode {
             if(gamepad2.x){
                 intakeSubsys.grabPixels();
             }
+            */
 
             // Claw up and down
+            /*
             if(gamepad2.dpad_down) {
                 panServoPos = panServoPos + 0.002;
             } if(gamepad2.dpad_up)
@@ -210,20 +252,33 @@ public class VroomVroom extends LinearOpMode {
             } if (panServoPos > 1){
                 panServoPos = 1;
             }
+            */
+
+            // Double Claw
+            if (gamepad2.left_stick_button) {
+                clawRPos = 0.44;
+                clawLPos = 0.528;
+            } else if (gamepad2.right_stick_button) {
+                clawRPos = 0.747;
+                clawLPos = 0.195;
+            }
 
             // Claw R
             if(gamepad2.right_trigger > 0.3){
-                clawRPos = 0.6;
+                clawRPos = 0.747;
             } else if (gamepad2.right_bumper) {
-                clawRPos = 0.5;
+                clawRPos = 0.44;
             }
             // Claw L
             if(gamepad2.left_trigger > 0.3){
-                clawLPos = 0.23;
+                clawLPos = 0.195;
             } else if (gamepad2.left_bumper) {
                 //Elvis presly
-                clawLPos = 0.4;
+                clawLPos = 0.528;
             }
+
+            // Claw Arm control
+            if (Math.abs(-gamepad2.right_stick_y) > 0.01) panServoPos = Range.clip(panServoPos + 0.00115*Math.pow(gamepad2.right_stick_y, 3), 0, 1);
 
             // Plane
             if(gamepad1.right_bumper && gamepad1.left_bumper) {
@@ -233,19 +288,20 @@ public class VroomVroom extends LinearOpMode {
             }
 
             // Arm test thing
+            if (Math.abs(-gamepad2.left_stick_y) > 0.01) armPower = Range.clip(armPower + 0.65*Math.pow(gamepad2.left_stick_y, 3), -1, 1);
+            /*
             if(gamepad2.dpad_left == true && gamepad2.dpad_right == false){
                 armPower = -1;
-            }
-            if (gamepad2.dpad_right == true && gamepad2.dpad_left == false) {
+            } else if (gamepad2.dpad_right == true && gamepad2.dpad_left == false) {
                 armPower = 0.7;
-            }
-            if (gamepad2.dpad_left == false && gamepad2.dpad_right == false){
+            } else {
                 armPower = 0;
             }
+             */
 
 
             // Pixel Drop
-            pixelDropPos= 1;
+            pixelDropPos = 1;
 
             // This is test code:
             //
@@ -265,15 +321,32 @@ public class VroomVroom extends LinearOpMode {
             */
 
             // Send calculated power to wheels
-            leftFrontDrive.setPower(leftFrontPower * 0.7);
-            rightFrontDrive.setPower(rightFrontPower * 0.7);
-            leftBackDrive.setPower(leftBackPower * 0.7);
-            rightBackDrive.setPower(rightBackPower * 0.7);
+            // Manual Hard Stop???
+            if (gamepad1.left_trigger > 0.1) {
+                leftFrontDrive.setPower(-0.2);
+                rightFrontDrive.setPower(-0.2);
+                leftBackDrive.setPower(-0.2);
+                rightBackDrive.setPower(-0.2);
+            }
+            if (gamepad1.right_trigger < 0.1) {
+                leftFrontDrive.setPower(leftFrontPower * 1);
+                rightFrontDrive.setPower(rightFrontPower * 1);
+                leftBackDrive.setPower(leftBackPower * 1);
+                rightBackDrive.setPower(rightBackPower * 1);
+                isSlowDrive = false;
+            }
+            if (gamepad1.right_trigger > 0.1){
+                leftFrontDrive.setPower(leftFrontPower * 0.5);
+                rightFrontDrive.setPower(rightFrontPower * 0.5);
+                leftBackDrive.setPower(leftBackPower * 0.5);
+                rightBackDrive.setPower(rightBackPower * 0.5);
+                isSlowDrive = true;
+            }
             bigArm.setPower(armPower);
           //  bigArm.setPower(gamepad2.dpad_left ? -1.0 : 0);
           //  bigArm.setPower(gamepad2.dpad_right ? 0.7 : 0);
-            hang.setPower(gamepad1.dpad_up ? 1.0 : 0);
-            hang.setPower(gamepad1.dpad_down ? -1.0 : 0);
+            hang.setPower(gamepad2.dpad_up ? 1.0 : 0);
+            hang.setPower(gamepad2.dpad_down ? -1.0 : 0);
             panUD.setPosition(panServoPos);
             planeOpen.setPower(planePower);
             pixelDrop.setPosition(pixelDropPos);
