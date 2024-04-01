@@ -160,20 +160,21 @@ public class BlueBACKDROPAuto extends OpMode {
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
-                        .lineToLinearHeading(new Pose2d(40.00, 34.5, Math.toRadians(-180)))
-                        .lineToConstantHeading(new Vector2d(49.75, 34.5))
+                        .lineToLinearHeading(new Pose2d(40.00, 36.5, Math.toRadians(-180)))
+                        .lineToConstantHeading(new Vector2d(46.75, 36.5))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0.79);
                         })
 
-                        .lineToConstantHeading(new Vector2d(46, 34.5))
-                        .lineToConstantHeading(new Vector2d(46, 60))
+                        .lineToConstantHeading(new Vector2d(49.75, 36.5))
+                        .lineToConstantHeading(new Vector2d(48, 36.5))
+                        .lineToConstantHeading(new Vector2d(45, 60))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
                         })
-
+                        .lineToConstantHeading(new Vector2d(59, 60))
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);

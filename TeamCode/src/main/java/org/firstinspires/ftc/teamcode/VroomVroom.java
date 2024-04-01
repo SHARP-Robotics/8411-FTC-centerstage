@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -81,7 +82,7 @@ public class VroomVroom extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
-    private DcMotor bigArm = null;
+    private DcMotorEx bigArm = null;
     private DcMotorEx ramp = null;
     private DcMotor spinPixel = null;
     private DcMotorEx hang = null;
@@ -97,7 +98,6 @@ public class VroomVroom extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-
         panCd = new ElapsedTime();
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
@@ -105,18 +105,18 @@ public class VroomVroom extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        bigArm = hardwareMap.get(DcMotor.class, "big_arm");
+        bigArm = hardwareMap.get(DcMotorEx.class, "big_arm");
         ramp = hardwareMap.get(DcMotorEx.class, "ramp");
         spinPixel = hardwareMap.get(DcMotorEx.class, "spin");
         hang = hardwareMap.get(DcMotorEx.class, "hanging");
         // panUD = hardwareMap.get(Servo.class, "pan");
-        panUD = hardwareMap.get(Servo.class, "pan");
+        panUD = hardwareMap.get(ServoImplEx.class, "pan");
         panUD2 = hardwareMap.get(CRServo.class, "pan2");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
         pixelDrop = hardwareMap.get(Servo.class, "p3Drop");
         clawL = hardwareMap.get(Servo.class, "clawServoL");
         clawR = hardwareMap.get(Servo.class, "clawServoR");
-        // intakeSubsys = new IntakeSubsys(hardwareMap);
+        intakeSubsys = new IntakeSubsys(hardwareMap);
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -140,7 +140,7 @@ public class VroomVroom extends LinearOpMode {
         panUD2.setDirection(CRServo.Direction.REVERSE);
         planeOpen.setDirection(CRServo.Direction.FORWARD);
         pixelDrop.setDirection(Servo.Direction.FORWARD);
-        // bigArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
 
@@ -162,6 +162,7 @@ public class VroomVroom extends LinearOpMode {
             double planePower;
             double pixelDropPos;
             double panServoPos = panUD.getPosition();
+          //  double panServoPos = 0.5;
             double clawLPos = clawL.getPosition();
             double clawRPos = clawR.getPosition();
             double armPower = 0;
@@ -223,22 +224,21 @@ public class VroomVroom extends LinearOpMode {
             }
             */
 
-            // Drivers didn't want to use this
-            /*
+            // Drivers didn't want to use this EDIT: apparently they do now?
+
             // Using the Intake Subsystem
             if(gamepad2.a){
                 intakeSubsys.prepareToDrive();
-            }
-            if(gamepad2.y){
+            } else if(gamepad2.y){
                 intakeSubsys.prepareToScore();
-            }
-            if(gamepad2.b){
+            } else if(gamepad2.b){
                 intakeSubsys.prepareToIntake();
-            }
-            if(gamepad2.x){
+            } else if(gamepad2.x){
                 intakeSubsys.grabPixels();
+            } else {
+                bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
-            */
+
 
             // Claw up and down
             /*
@@ -255,10 +255,10 @@ public class VroomVroom extends LinearOpMode {
             */
 
             // Double Claw
-            if (gamepad2.left_stick_button) {
+            if (gamepad2.right_stick_button) {
                 clawRPos = 0.44;
                 clawLPos = 0.528;
-            } else if (gamepad2.right_stick_button) {
+            } else if (gamepad2.left_stick_button) {
                 clawRPos = 0.747;
                 clawLPos = 0.195;
             }
@@ -329,17 +329,17 @@ public class VroomVroom extends LinearOpMode {
                 rightBackDrive.setPower(-0.2);
             }
             if (gamepad1.right_trigger < 0.1) {
-                leftFrontDrive.setPower(leftFrontPower * 1);
-                rightFrontDrive.setPower(rightFrontPower * 1);
-                leftBackDrive.setPower(leftBackPower * 1);
-                rightBackDrive.setPower(rightBackPower * 1);
-                isSlowDrive = false;
-            }
-            if (gamepad1.right_trigger > 0.1){
                 leftFrontDrive.setPower(leftFrontPower * 0.5);
                 rightFrontDrive.setPower(rightFrontPower * 0.5);
                 leftBackDrive.setPower(leftBackPower * 0.5);
                 rightBackDrive.setPower(rightBackPower * 0.5);
+                isSlowDrive = false;
+            }
+            if (gamepad1.right_trigger > 0.1){
+                leftFrontDrive.setPower(leftFrontPower * 1);
+                rightFrontDrive.setPower(rightFrontPower * 1);
+                leftBackDrive.setPower(leftBackPower * 1);
+                rightBackDrive.setPower(rightBackPower * 1);
                 isSlowDrive = true;
             }
             bigArm.setPower(armPower);
