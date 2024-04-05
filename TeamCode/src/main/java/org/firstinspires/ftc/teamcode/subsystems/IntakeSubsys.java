@@ -26,19 +26,19 @@ public class IntakeSubsys {
     public static double INTAKE_CLAW_SERVO_LEFT_OPEN = 0.4;
     public static double INTAKE_CLAW_SERVO_RIGHT_OPEN = 0.4;
 
-    public static double INTAKE_CLAW_SERVO_LEFT_CLOSE = 0.2;
-    public static double INTAKE_CLAW_SERVO_RIGHT_CLOSE = 0.2;
+    public static double INTAKE_CLAW_SERVO_LEFT_CLOSE = 0.5;
+    public static double INTAKE_CLAW_SERVO_RIGHT_CLOSE = 0.8;
 
-    public static double INTAKE_PIVOT_SERVO_GRAB = 0.2;
-    public static double INTAKE_PIVOT_SERVO_FOLD = 0.3;
+    public static double INTAKE_PIVOT_SERVO_GRAB = 0.17;
+    public static double INTAKE_PIVOT_SERVO_FOLD = 0.0;
     public static double INTAKE_PIVOT_SERVO_SCORE = 0.4;
 
     // intake arm encoder value for different positions
     // this needs to be tuned with motor tester or using FtCDashboard
     //-----------------------------------------------------------------
-    public static int INTAKE_ARM_INTAKE_POSITION = 100;
+    public static int INTAKE_ARM_INTAKE_POSITION = 174;
     public static int INTAKE_ARM_INTAKE_SCORE = 300;
-    public static int INTAKE_ARM_INTAKE_SAFE_CROSS = 800;
+    public static int INTAKE_ARM_INTAKE_SAFE_CROSS = 300;
     public static int INTAKE_ARM_INTAKE_HANGING = 2000;
 
     public enum ClawState {
@@ -56,7 +56,7 @@ public class IntakeSubsys {
 
         // change the direction accordingly, make sure the position encoder value is UP
         // ------------------------------------------------------------
-        intakeArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeArmMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -112,7 +112,7 @@ public class IntakeSubsys {
 
         // Turn On RUN_TO_POSITION
         intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeArmMotor.setPower(0.9);
+        intakeArmMotor.setPower(0.6);
 
         // move the pivot arm
         intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_GRAB);
@@ -132,7 +132,7 @@ public class IntakeSubsys {
 
         // Turn On RUN_TO_POSITION
         intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeArmMotor.setPower(0.9);
+        intakeArmMotor.setPower(0.6);
 
         // move the pivot arm
         intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_FOLD);

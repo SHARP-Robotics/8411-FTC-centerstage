@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
 
+import java.util.Vector;
+
 @Autonomous
 public class BlueBACKDROPAuto extends OpMode {
     private OCVVisionProc drawProcessor;
@@ -70,32 +72,36 @@ public class BlueBACKDROPAuto extends OpMode {
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
                         .lineToConstantHeading(new Vector2d(26.00, 58.00))
-                        .lineToConstantHeading(new Vector2d(25.00, 31.00))
+                        .lineToConstantHeading(new Vector2d(25.00, 34-.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
+                        .lineToConstantHeading(new Vector2d(25.00, 31.00))
                         .lineToConstantHeading(new Vector2d(25.00, 41.5))
+                        .lineToLinearHeading(new Pose2d(40.00, 41.5, Math.toRadians(-180)))
+
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
-                        .lineToLinearHeading(new Pose2d(40.00, 41.5, Math.toRadians(-180)))
-                        .lineToConstantHeading(new Vector2d(49.75, 41.5))
+
+                        .lineToConstantHeading(new Vector2d(46.75, 41.5))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0.79);
                         })
 
+                        .lineToConstantHeading(new Vector2d(49.75, 41.5))
                         .lineToConstantHeading(new Vector2d(46, 41.5))
-                        .lineToConstantHeading(new Vector2d(46, 60))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
                         })
 
+                        .lineToConstantHeading(new Vector2d(46, 58))
+                        .lineToConstantHeading(new Vector2d(59, 58))
                         .build();
-
                 drive.followTrajectorySequence(trajL);
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -109,33 +115,35 @@ public class BlueBACKDROPAuto extends OpMode {
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
                         .lineToConstantHeading(new Vector2d(11, 54))
-                        .lineToLinearHeading(new Pose2d(8.50, 42.00, Math.toRadians(60)))
+                        .lineToLinearHeading(new Pose2d(9, 41.5, Math.toRadians(60)))
+                        .lineToConstantHeading(new Vector2d(15, 41.5))
 
-                        .addDisplacementMarker(7, () -> {
+                        .addDisplacementMarker(6.5, () -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToLinearHeading(new Pose2d(24.00, 38.00, Math.toRadians(-90)))
+                        .lineToConstantHeading(new Vector2d(22, 31.5))
+                        .turn(Math.toRadians(120))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
 
-                        .lineToLinearHeading(new Pose2d(40.00, 33.00, Math.toRadians(-180)))
-                        .lineToConstantHeading(new Vector2d(49.75, 33))
+                        .lineToConstantHeading(new Vector2d(49, 31.5))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0.79);
                         })
 
-                        .lineToConstantHeading(new Vector2d(50, 33))
-                        .lineToConstantHeading(new Vector2d(45, 33))
-                        .lineToConstantHeading(new Vector2d(45, 60))
+                        .lineToConstantHeading(new Vector2d(49.75, 31.5))
+                        .lineToConstantHeading(new Vector2d(45, 31.5))
+                        .lineToConstantHeading(new Vector2d(45, 59))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
                         })
 
+                        .lineToConstantHeading(new Vector2d(59, 58))
                         .build();
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
@@ -160,20 +168,21 @@ public class BlueBACKDROPAuto extends OpMode {
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
-                        .lineToLinearHeading(new Pose2d(40.00, 34.5, Math.toRadians(-180)))
-                        .lineToConstantHeading(new Vector2d(49.75, 34.5))
+                        .lineToLinearHeading(new Pose2d(40.00, 36.5, Math.toRadians(-180)))
+                        .lineToConstantHeading(new Vector2d(46.75, 37.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0.79);
+                            backPixelDrop.setPosition(0.76);
                         })
 
-                        .lineToConstantHeading(new Vector2d(46, 34.5))
-                        .lineToConstantHeading(new Vector2d(46, 60))
+                        .lineToConstantHeading(new Vector2d(49.75, 37.5))
+                        .lineToConstantHeading(new Vector2d(48, 37.5))
+                        .lineToConstantHeading(new Vector2d(48, 58))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
                         })
-
+                        .lineToConstantHeading(new Vector2d(59, 58))
                         .build();
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
