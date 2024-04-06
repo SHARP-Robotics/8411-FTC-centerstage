@@ -224,8 +224,9 @@ public class VroomVroom extends LinearOpMode {
             }
             */
 
-            // Drivers didn't want to use this EDIT: apparently they do now?
+            // Drivers didn't want to use this EDIT: apparently they do now? EDIT: they dont
 
+            /*
             // Using the Intake Subsystem
             if(gamepad2.a){
                 intakeSubsys.prepareToDrive();
@@ -238,6 +239,7 @@ public class VroomVroom extends LinearOpMode {
             } else {
                 bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
+             */
 
 
             // Claw up and down
