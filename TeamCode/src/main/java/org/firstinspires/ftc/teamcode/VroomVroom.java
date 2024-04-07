@@ -29,15 +29,20 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsys;
 import org.firstinspires.ftc.teamcode.tests.MotorTest;
@@ -92,17 +97,22 @@ public class VroomVroom extends LinearOpMode {
     private Servo pixelDrop = null;
     private Servo clawL = null;
     private Servo clawR = null;
-
+    public static int armTargetPos;
+    public static int armPos;
     private IntakeSubsys intakeSubsys;
     private long elapsedTime;
+    public static double panServoPos = 0.17;
 
+    public void Init(){
+        bigArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
     @Override
     public void runOpMode() {
         panCd = new ElapsedTime();
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         bigArm = hardwareMap.get(DcMotorEx.class, "big_arm");
@@ -140,9 +150,9 @@ public class VroomVroom extends LinearOpMode {
         panUD2.setDirection(CRServo.Direction.REVERSE);
         planeOpen.setDirection(CRServo.Direction.FORWARD);
         pixelDrop.setDirection(Servo.Direction.FORWARD);
-        bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-
+        bigArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // Dashboard
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
@@ -151,21 +161,24 @@ public class VroomVroom extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+        // pickup 0.77
+        // drop 0.72
+        // pickup arm 227
+        // drive arm 0
+        // drop arm 440
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.right_stick_x;
+            double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            double lateral = gamepad1.left_stick_x;
+            double yaw = gamepad1.right_stick_x;
             double planePower;
             double pixelDropPos;
-            double panServoPos = panUD.getPosition();
-          //  double panServoPos = 0.5;
             double clawLPos = clawL.getPosition();
             double clawRPos = clawR.getPosition();
-            double armPower = 0;
 
             // Hard stop
             boolean isSlowDrive = false;
@@ -174,13 +187,16 @@ public class VroomVroom extends LinearOpMode {
             final long COASTING_DURATION = 200;
 
 
-
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
-            double leftFrontPower  = axial + lateral + yaw;
+            double leftFrontPower = axial + lateral + yaw;
             double rightFrontPower = axial - lateral - yaw;
-            double leftBackPower   = axial - lateral + yaw;
-            double rightBackPower  = axial + lateral - yaw;
+            double leftBackPower = axial - lateral + yaw;
+            double rightBackPower = axial + lateral - yaw;
+
+            // Get PID coefficients
+            // PIDFCoefficients pidfNew = new PIDFCoefficients(P, I, D, F);
+            // bigArm.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
 
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
@@ -189,10 +205,10 @@ public class VroomVroom extends LinearOpMode {
             max = Math.max(max, Math.abs(rightBackPower));
 
             if (max > 1.0) {
-                leftFrontPower  /= max;
+                leftFrontPower /= max;
                 rightFrontPower /= max;
-                leftBackPower   /= max;
-                rightBackPower  /= max;
+                leftBackPower /= max;
+                rightBackPower /= max;
             }
 
             /*
@@ -224,21 +240,21 @@ public class VroomVroom extends LinearOpMode {
             }
             */
 
-            // Drivers didn't want to use this EDIT: apparently they do now?
-
             // Using the Intake Subsystem
-            if(gamepad2.a){
+            if (gamepad2.a) {
                 intakeSubsys.prepareToDrive();
-            } else if(gamepad2.y){
+            } else if (gamepad2.y) {
                 intakeSubsys.prepareToScore();
-            } else if(gamepad2.b){
+            } else if (gamepad2.b) {
                 intakeSubsys.prepareToIntake();
-            } else if(gamepad2.x){
+            } else if (gamepad2.x) {
                 intakeSubsys.grabPixels();
-            } else {
+            }
+            /*
+            else {
                 bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
-
+             */
 
             // Claw up and down
             /*
@@ -264,13 +280,13 @@ public class VroomVroom extends LinearOpMode {
             }
 
             // Claw R
-            if(gamepad2.right_trigger > 0.3){
+            if (gamepad2.right_trigger > 0.3) {
                 clawRPos = 0.747;
             } else if (gamepad2.right_bumper) {
                 clawRPos = 0.44;
             }
             // Claw L
-            if(gamepad2.left_trigger > 0.3){
+            if (gamepad2.left_trigger > 0.3) {
                 clawLPos = 0.195;
             } else if (gamepad2.left_bumper) {
                 //Elvis presly
@@ -278,27 +294,39 @@ public class VroomVroom extends LinearOpMode {
             }
 
             // Claw Arm control
-            if (Math.abs(-gamepad2.right_stick_y) > 0.01) panServoPos = Range.clip(panServoPos + 0.00115*Math.pow(gamepad2.right_stick_y, 3), 0, 1);
+            if (Math.abs(-gamepad2.right_stick_y) > 0.01)
+                panServoPos = Range.clip(panServoPos + 0.00115 * Math.pow(gamepad2.right_stick_y, 3), 0, 1);
 
             // Plane
-            if(gamepad1.right_bumper && gamepad1.left_bumper) {
+            if (gamepad1.right_bumper && gamepad1.left_bumper) {
                 planePower = -1;
             } else {
                 planePower = 0;
             }
 
             // Arm test thing
-            if (Math.abs(-gamepad2.left_stick_y) > 0.01) armPower = Range.clip(armPower + 0.65*Math.pow(gamepad2.left_stick_y, 3), -1, 1);
+
+            armPos = bigArm.getTargetPosition();
+            if (gamepad2.dpad_right) {
+                armTargetPos = armPos - 3;
+            } else if (gamepad2.dpad_left) {
+                armTargetPos = armPos + 3;
+            } else if (!gamepad2.dpad_right && !gamepad2.dpad_left) {
+                armTargetPos = 0;
+            }
+
             /*
-            if(gamepad2.dpad_left == true && gamepad2.dpad_right == false){
-                armPower = -1;
-            } else if (gamepad2.dpad_right == true && gamepad2.dpad_left == false) {
-                armPower = 0.7;
-            } else {
-                armPower = 0;
+            else if (-gamepad2.left_stick_y > -0.1) {
+                armTargetPos = armPos - 50;
             }
              */
 
+
+            /*
+            if (-gamepad2.left_stick_y > 0.2) {
+                if (Math.abs(-gamepad2.left_stick_y) > 0.01)
+                    armTargetPos = Range.clip(armPos + 50 * Math.pow(gamepad2.left_stick_y, 3), 0, 1000);
+            } */
 
             // Pixel Drop
             pixelDropPos = 1;
@@ -335,38 +363,40 @@ public class VroomVroom extends LinearOpMode {
                 rightBackDrive.setPower(rightBackPower * 0.5);
                 isSlowDrive = false;
             }
-            if (gamepad1.right_trigger > 0.1){
+            if (gamepad1.right_trigger > 0.1) {
                 leftFrontDrive.setPower(leftFrontPower * 1);
                 rightFrontDrive.setPower(rightFrontPower * 1);
                 leftBackDrive.setPower(leftBackPower * 1);
                 rightBackDrive.setPower(rightBackPower * 1);
                 isSlowDrive = true;
             }
-            bigArm.setPower(armPower);
-          //  bigArm.setPower(gamepad2.dpad_left ? -1.0 : 0);
-          //  bigArm.setPower(gamepad2.dpad_right ? 0.7 : 0);
+            if (gamepad2.dpad_right || gamepad2.dpad_left) {
+                bigArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                bigArm.setTargetPosition((int) armTargetPos);
+                bigArm.setPower(0.6);
+            }
             hang.setPower(gamepad2.dpad_up ? 1.0 : 0);
             hang.setPower(gamepad2.dpad_down ? -1.0 : 0);
-            panUD.setPosition(panServoPos);
+            //panUD.setPosition(panServoPos);
             planeOpen.setPower(planePower);
             pixelDrop.setPosition(pixelDropPos);
             clawL.setPosition(clawLPos);
             clawR.setPosition(clawRPos);
 
 
-
-
-
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
-            telemetry.addData("Pan Up/Down","%1f", panServoPos);
+            telemetry.addData("Pan Up/Down", "%1f", panServoPos);
             telemetry.addData("Right Trigger", "%1f", gamepad2.right_trigger);
             telemetry.addData("Pixel Drop Pos", "%1f", pixelDropPos);
-            telemetry.addData("Claw Pos (L then R)", "%1f, %1f", clawLPos,clawRPos);
-            telemetry.addData("Arm power ting", "%1f", armPower);
+            telemetry.addData("Claw Pos (L then R)", "%1f, %1f", clawLPos, clawRPos);
+            telemetry.addData("Arm target encoder value", armTargetPos);
+            telemetry.addData("Arm encoder value", armPos);
+
 
             telemetry.update();
         }
-    }}
+    }
+}

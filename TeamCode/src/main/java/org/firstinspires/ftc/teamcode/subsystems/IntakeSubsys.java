@@ -29,16 +29,16 @@ public class IntakeSubsys {
     public static double INTAKE_CLAW_SERVO_LEFT_CLOSE = 0.5;
     public static double INTAKE_CLAW_SERVO_RIGHT_CLOSE = 0.8;
 
-    public static double INTAKE_PIVOT_SERVO_GRAB = 0.17;
-    public static double INTAKE_PIVOT_SERVO_FOLD = 0.0;
-    public static double INTAKE_PIVOT_SERVO_SCORE = 0.4;
+    public static double INTAKE_PIVOT_SERVO_GRAB = 0.77;
+    public static double INTAKE_PIVOT_SERVO_FOLD = 0.17;
+    public static double INTAKE_PIVOT_SERVO_SCORE = 0.72;
 
     // intake arm encoder value for different positions
     // this needs to be tuned with motor tester or using FtCDashboard
     //-----------------------------------------------------------------
-    public static int INTAKE_ARM_INTAKE_POSITION = 174;
-    public static int INTAKE_ARM_INTAKE_SCORE = 300;
-    public static int INTAKE_ARM_INTAKE_SAFE_CROSS = 300;
+    public static int INTAKE_ARM_INTAKE_POSITION = -287;
+    public static int INTAKE_ARM_INTAKE_SCORE = -740;
+    public static int INTAKE_ARM_INTAKE_SAFE_CROSS = 0;
     public static int INTAKE_ARM_INTAKE_HANGING = 2000;
 
     public enum ClawState {
@@ -107,12 +107,13 @@ public class IntakeSubsys {
 
     public void prepareToIntake() {
 
+        // Turn On RUN_TO_POSITION
+        intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         // move the arm to the intake position
         intakeArmMotor.setTargetPosition(INTAKE_ARM_INTAKE_POSITION);
 
-        // Turn On RUN_TO_POSITION
-        intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intakeArmMotor.setPower(0.6);
+        intakeArmMotor.setPower(0.4);
 
         // move the pivot arm
         intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_GRAB);
