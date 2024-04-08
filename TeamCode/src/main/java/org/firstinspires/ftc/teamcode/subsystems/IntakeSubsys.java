@@ -107,11 +107,9 @@ public class IntakeSubsys {
 
     public void prepareToIntake() {
 
-        // Turn On RUN_TO_POSITION
-        intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
         // move the arm to the intake position
         intakeArmMotor.setTargetPosition(INTAKE_ARM_INTAKE_POSITION);
+        intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         intakeArmMotor.setPower(0.4);
 

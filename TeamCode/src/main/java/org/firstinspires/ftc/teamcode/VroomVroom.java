@@ -92,20 +92,15 @@ public class VroomVroom extends LinearOpMode {
     private DcMotor spinPixel = null;
     private DcMotorEx hang = null;
     private Servo panUD = null;
-    private CRServo panUD2 = null;
     private CRServo planeOpen = null;
     private Servo pixelDrop = null;
     private Servo clawL = null;
     private Servo clawR = null;
-    public static int armTargetPos;
+    private Servo puDrop = null;
+    public static int armTargetPos = 0;
     public static int armPos;
     private IntakeSubsys intakeSubsys;
-    private long elapsedTime;
     public static double panServoPos = 0.17;
-
-    public void Init(){
-        bigArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
     @Override
     public void runOpMode() {
         panCd = new ElapsedTime();
@@ -121,11 +116,11 @@ public class VroomVroom extends LinearOpMode {
         hang = hardwareMap.get(DcMotorEx.class, "hanging");
         // panUD = hardwareMap.get(Servo.class, "pan");
         panUD = hardwareMap.get(ServoImplEx.class, "pan");
-        panUD2 = hardwareMap.get(CRServo.class, "pan2");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
         pixelDrop = hardwareMap.get(Servo.class, "p3Drop");
         clawL = hardwareMap.get(Servo.class, "clawServoL");
         clawR = hardwareMap.get(Servo.class, "clawServoR");
+        puDrop = hardwareMap.get(Servo.class, "puDrop");
         intakeSubsys = new IntakeSubsys(hardwareMap);
 
         // ########################################################################################
@@ -147,7 +142,6 @@ public class VroomVroom extends LinearOpMode {
         spinPixel.setDirection(DcMotorEx.Direction.FORWARD);
         hang.setDirection(DcMotorEx.Direction.FORWARD);
         panUD.setDirection(Servo.Direction.FORWARD);
-        panUD2.setDirection(CRServo.Direction.REVERSE);
         planeOpen.setDirection(CRServo.Direction.FORWARD);
         pixelDrop.setDirection(Servo.Direction.FORWARD);
         bigArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -348,6 +342,13 @@ public class VroomVroom extends LinearOpMode {
             rightBackPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
             */
 
+
+            // testing back servo
+            if (gamepad1.a){
+                puDrop.setPosition(0);
+            } else if (gamepad1.x) {
+                puDrop.setPosition(1);
+            }
             // Send calculated power to wheels
             // Manual Hard Stop???
             if (gamepad1.left_trigger > 0.1) {
@@ -372,7 +373,7 @@ public class VroomVroom extends LinearOpMode {
             }
             if (gamepad2.dpad_right || gamepad2.dpad_left) {
                 bigArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                bigArm.setTargetPosition((int) armTargetPos);
+                bigArm.setTargetPosition(armTargetPos);
                 bigArm.setPower(0.6);
             }
             hang.setPower(gamepad2.dpad_up ? 1.0 : 0);

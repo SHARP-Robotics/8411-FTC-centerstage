@@ -10,20 +10,24 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
+
+import java.util.Vector;
+
 @Autonomous
 public class BlueAutoFront extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
     private Servo backPixelDrop = null;
-    private Servo p3DropSOFHSIEHfi = null;
     int positionDetect = 0;
+
 
     @Override
     public void init() {
+        drawProcessor = new OCVVisionProc();
+
         pixelDrop = hardwareMap.get(Servo.class, "puDrop");
         backPixelDrop = hardwareMap.get(Servo.class, "p3Drop");
-        drawProcessor = new OCVVisionProc();
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), drawProcessor);
         visionPortal.resumeStreaming();
     }
@@ -52,14 +56,11 @@ public class BlueAutoFront extends OpMode {
     @Override
     public void start() {
 
-        visionPortal.resumeStreaming();
-        visionPortal.setProcessorEnabled(drawProcessor, true);
     }
 
     @Override
-    public void loop()  {
-        telemetry.addData("Identified", drawProcessor.getSelection());
-
+    public void loop() {
+        telemetry.addData("Identified", positionDetect);
 
         switch (positionDetect) {
             case 1:
@@ -121,6 +122,8 @@ public class BlueAutoFront extends OpMode {
                 visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
 
+                telemetry.addData("Testing back servo pos", backPixelDrop.getPosition());
+
                 Pose2d startPoseM = new Pose2d(-34.5, 61, Math.toRadians(90));
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
@@ -132,24 +135,29 @@ public class BlueAutoFront extends OpMode {
 
 
                         .addDisplacementMarker(2,() -> {
-                            backPixelDrop.setPosition(0.3);
+                            backPixelDrop.setPosition(0.6);
                         })
 
-                        .lineToLinearHeading(new Pose2d(-40, 57.00, Math.toRadians(180)))
+                        .lineToLinearHeading(new Pose2d(-42, 57.00, Math.toRadians(180)))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
 
                         .lineToConstantHeading(new Vector2d(45, 57))
-                        .lineToConstantHeading(new Vector2d(51.00, 28))
+                        .lineToConstantHeading(new Vector2d(51.00, 37.5))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0.78);
                         })
 
-                        .lineToConstantHeading(new Vector2d(49, 28))
-                        .lineToConstantHeading(new Vector2d(45, 28))
+                        .lineToConstantHeading(new Vector2d(49, 37.5))
+                        .lineToConstantHeading(new Vector2d(45, 37.5))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0);
+                        })
+
                         .lineToConstantHeading(new Vector2d(45, 60))
                         .lineToConstantHeading(new Vector2d(60, 60))
 
