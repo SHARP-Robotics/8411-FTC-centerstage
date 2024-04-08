@@ -183,7 +183,7 @@ public class BlueAutoFront extends OpMode {
                 Pose2d startPoseM = new Pose2d(-34.5, 61, Math.toRadians(90));
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
-                        .lineToConstantHeading(new Vector2d(-34.5, 36.00))
+                        .lineToConstantHeading(new Vector2d(-37, 36.00))
 
                         .addDisplacementMarker(2, () -> {
                             pixelDrop.setPosition(0);
