@@ -17,14 +17,10 @@ public class MeepMeepy {
                 .setColorScheme(new ColorSchemeBlueDark())
                 .setConstraints(20, 20, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-34.5, 61, Math.toRadians(90.00)))
-                        .lineToConstantHeading(new Vector2d(-34.5, 36.00))
-                        .lineToLinearHeading(new Pose2d(-40, 60.00, Math.toRadians(180)))
-                        .lineToConstantHeading(new Vector2d(45, 57.5))
-                        .lineToConstantHeading(new Vector2d(51.00, 28))
-                        .lineToConstantHeading(new Vector2d(49, 28))
-                        .lineToConstantHeading(new Vector2d(45, 28))
-                        .lineToConstantHeading(new Vector2d(45, 60))
-                        .lineToConstantHeading(new Vector2d(60, 60))
+                        .lineToConstantHeading(new Vector2d(-36, 51))
+                        .lineToLinearHeading(new Pose2d(-39, 36.00, Math.toRadians(140)))
+                        .lineToConstantHeading(new Vector2d(-42, 36.00))
+
                         .build());
 
 
