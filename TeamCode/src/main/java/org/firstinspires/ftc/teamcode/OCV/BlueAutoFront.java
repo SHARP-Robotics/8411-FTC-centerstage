@@ -22,6 +22,7 @@ public class BlueAutoFront extends OpMode {
     @Override
     public void init() {
         pixelDrop = hardwareMap.get(Servo.class, "puDrop");
+        backPixelDrop = hardwareMap.get(Servo.class, "p3Drop");
         drawProcessor = new OCVVisionProc();
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), drawProcessor);
         visionPortal.resumeStreaming();
@@ -123,12 +124,35 @@ public class BlueAutoFront extends OpMode {
                 Pose2d startPoseM = new Pose2d(-34.5, 61, Math.toRadians(90));
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
-                        .lineToConstantHeading(new Vector2d(-36, 36))
-                        .lineToConstantHeading(new Vector2d(-34.5, 55))
+                        .lineToConstantHeading(new Vector2d(-34.5, 36.00))
 
-                        .addDisplacementMarker(9, () -> {
+                        .addDisplacementMarker(2, () -> {
                             pixelDrop.setPosition(0);
                         })
+
+
+                        .addDisplacementMarker(2,() -> {
+                            backPixelDrop.setPosition(0.3);
+                        })
+
+                        .lineToLinearHeading(new Pose2d(-40, 57.00, Math.toRadians(180)))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(1);
+                        })
+
+                        .lineToConstantHeading(new Vector2d(45, 57))
+                        .lineToConstantHeading(new Vector2d(51.00, 28))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0.78);
+                        })
+
+                        .lineToConstantHeading(new Vector2d(49, 28))
+                        .lineToConstantHeading(new Vector2d(45, 28))
+                        .lineToConstantHeading(new Vector2d(45, 60))
+                        .lineToConstantHeading(new Vector2d(60, 60))
+
                         .build();
 
 
