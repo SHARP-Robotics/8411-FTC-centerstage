@@ -72,19 +72,40 @@ public class RedAutoFront extends OpMode {
                 drive.setPoseEstimate(startPoseL);
 
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToConstantHeading(new Vector2d(-52.00, -59.00))
+                        .lineToConstantHeading(new Vector2d(-52, -44))
 
-                        .addDisplacementMarker(() -> {
+                        .addDisplacementMarker(2, () -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(-52, -44))
+
+                        .addDisplacementMarker(2,() -> {
+                            backPixelDrop.setPosition(0.6);
+                        })
+
                         .lineToConstantHeading(new Vector2d(-52, -42))
-                        .lineToConstantHeading(new Vector2d(-34.5, -59.00))
+                        .lineToLinearHeading(new Pose2d(-34.5, -59.00, Math.toRadians(-360)))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
+
+                        .lineToConstantHeading(new Vector2d(45, -59))
+                        .lineToConstantHeading(new Vector2d(51.00, -28))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0.78);
+                        })
+
+                        .lineToConstantHeading(new Vector2d(49, -28))
+                        .lineToConstantHeading(new Vector2d(45, -28))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(0);
+                        })
+
+                        .lineToConstantHeading(new Vector2d(45, -60))
+                        .lineToConstantHeading(new Vector2d(60, -60))
 
                         .build();
 
