@@ -39,7 +39,8 @@ public class IntakeSubsys {
     public static int INTAKE_ARM_INTAKE_POSITION = -287;
     public static int INTAKE_ARM_INTAKE_SCORE = -740;
     public static int INTAKE_ARM_INTAKE_SAFE_CROSS = 0;
-    public static int INTAKE_ARM_INTAKE_HANGING = 2000;
+    public static int INTAKE_ARM_INTAKE_LOW_SCORE = -580;
+    public static int INTAKE_ARM_INTAKE_HANGING = -900;
 
     public enum ClawState {
         CLOSED,
@@ -153,6 +154,24 @@ public class IntakeSubsys {
 
         // open the claws
         openClaws(ClawState.CLOSED);
+    }
+
+    public void prepareToLowScore() {
+        intakeArmMotor.setTargetPosition(INTAKE_ARM_INTAKE_LOW_SCORE);
+
+        intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeArmMotor.setPower(0.9);
+
+        intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_SCORE);
+    }
+
+    public void prepareToHang() {
+        intakeArmMotor.setTargetPosition(INTAKE_ARM_INTAKE_HANGING);
+
+        intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeArmMotor.setPower(0.9);
+
+        intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_FOLD);
     }
 
 }
