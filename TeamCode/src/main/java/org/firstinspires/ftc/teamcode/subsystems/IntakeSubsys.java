@@ -137,8 +137,11 @@ public class IntakeSubsys {
         // move the pivot arm
         intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_FOLD);
 
-        // open the claws
-        openClaws(ClawState.CLOSED);
+        //claws close
+        intakeClawServoLeft.setPosition(0.195);
+        intakeClawServoRight.setPosition(0.747);
+
+
     }
 
     public void prepareToScore() {
