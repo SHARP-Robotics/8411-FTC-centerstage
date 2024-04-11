@@ -102,7 +102,7 @@ public class BlueAutoFront extends OpMode {
 
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0);
+                            backPixelDrop.setPosition(1);
                         })
 
                         .lineToConstantHeading(new Vector2d(45, 60))
@@ -127,7 +127,6 @@ public class BlueAutoFront extends OpMode {
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
                         .lineToConstantHeading(new Vector2d(-52, 45))
-                        .lineToConstantHeading(new Vector2d(-34.5, 55))
 
                         .addDisplacementMarker(2, () -> {
                             pixelDrop.setPosition(0);
@@ -155,7 +154,7 @@ public class BlueAutoFront extends OpMode {
                         .lineToConstantHeading(new Vector2d(45, 31.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0);
+                            backPixelDrop.setPosition(1);
                         })
 
                         .lineToConstantHeading(new Vector2d(45, 60))
@@ -213,7 +212,7 @@ public class BlueAutoFront extends OpMode {
                         .lineToConstantHeading(new Vector2d(45, 37.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0);
+                            backPixelDrop.setPosition(1);
                         })
 
                         .lineToConstantHeading(new Vector2d(45, 60))

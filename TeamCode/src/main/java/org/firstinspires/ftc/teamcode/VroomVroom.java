@@ -103,9 +103,11 @@ public class VroomVroom extends LinearOpMode {
     public static double armPos;
     private IntakeSubsys intakeSubsys;
     public static double panServoPos = 0.17;
-    public static boolean panServoPosition1 = false;
+    public static boolean panServoPositionDown = false;
+    public static boolean panServoPositionUp = false;
     public static double panServoCurrentPos;
     ElapsedTime panTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+    ElapsedTime panTimer2 = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     @Override
     public void runOpMode() {
         // Initialize the hardware variables. Note that the strings used here must correspond
@@ -160,6 +162,8 @@ public class VroomVroom extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+        bigArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         // pickup 0.77
         // drop 0.72
         // pickup arm 227
@@ -211,12 +215,15 @@ public class VroomVroom extends LinearOpMode {
             // Using the Intake Subsystem
             if (gamepad2.a) {
                 intakeSubsys.prepareToDrive();
+
+                panServoPositionUp = true;
+                panTimer2.reset();
             } else if (gamepad2.y) {
                 intakeSubsys.prepareToScore();
             } else if (gamepad2.b) {
                 intakeSubsys.prepareToIntake();
 
-                panServoPosition1 = true;
+                panServoPositionDown = true;
                 panTimer.reset();
             } else if (gamepad2.x) {
                 intakeSubsys.prepareToLowScore();
@@ -224,10 +231,16 @@ public class VroomVroom extends LinearOpMode {
                 intakeSubsys.prepareToHang();
             }
 
+            // Higher Claw Position
+            if(panServoPositionUp && panTimer2.milliseconds() > 500) {
+                panUD.setPosition(0.17);
+                panServoPositionUp = false;
+            }
+
             // Lower Claw Position
-            if(panServoPosition1 && panTimer.milliseconds() > 500.0){
+            if(panServoPositionDown && panTimer.milliseconds() > 500.0) {
                 panUD.setPosition(0.77);
-                panServoPosition1 = false;
+                panServoPositionDown = false;
             }
 
             // Double Claw
@@ -255,6 +268,7 @@ public class VroomVroom extends LinearOpMode {
                     clawL.setPosition(leftCO);
                 }
             }
+
             // Claw Arm control
             panServoCurrentPos = panUD.getPosition();
             if (-gamepad2.right_stick_y > 0.1) {
@@ -323,6 +337,7 @@ public class VroomVroom extends LinearOpMode {
             telemetry.addData("Claw Pos (L then R)", "%1f, %1f", clawL.getPosition(), clawR.getPosition());
             telemetry.addData("Arm target encoder value", armTargetPos);
             telemetry.addData("Arm encoder value", armPos);
+            telemetry.addData("Time of pan", panTimer.milliseconds());
 
 
             telemetry.update();
