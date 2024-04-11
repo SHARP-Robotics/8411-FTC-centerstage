@@ -241,6 +241,7 @@ public class VroomVroom extends LinearOpMode {
                 }
             }
 
+            //testing something
             // Claw R
             if (gamepad2.right_trigger > 0.3) {
                 clawR.setPosition(rightCC);
