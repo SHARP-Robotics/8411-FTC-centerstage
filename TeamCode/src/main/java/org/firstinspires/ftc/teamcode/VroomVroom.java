@@ -97,13 +97,17 @@ public class VroomVroom extends LinearOpMode {
     private Servo clawL = null;
     private Servo clawR = null;
     private Servo puDrop = null;
-    public static int armTargetPos = 0;
-    public static int armPos;
+    public static boolean isClawOpen = false;
+    public static double armTargetPos = 0;
+    public static int armPosI;
+    public static double armPos;
     private IntakeSubsys intakeSubsys;
     public static double panServoPos = 0.17;
+    public static boolean panServoPosition1 = false;
+    public static double panServoCurrentPos;
+    ElapsedTime panTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     @Override
     public void runOpMode() {
-        panCd = new ElapsedTime();
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
         leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
@@ -122,6 +126,7 @@ public class VroomVroom extends LinearOpMode {
         clawR = hardwareMap.get(Servo.class, "clawServoR");
         puDrop = hardwareMap.get(Servo.class, "puDrop");
         intakeSubsys = new IntakeSubsys(hardwareMap);
+
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -169,17 +174,15 @@ public class VroomVroom extends LinearOpMode {
             double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
+
+            // Other Stuff
             double planePower;
-            double pixelDropPos;
-            double clawLPos = clawL.getPosition();
-            double clawRPos = clawR.getPosition();
 
-            // Hard stop
-            boolean isSlowDrive = false;
-            boolean isHardStopViable = false;
-            long lastInputTime = 0;
-            final long COASTING_DURATION = 200;
-
+            // Positions
+            double leftCO = 0.528;
+            double rightCO = 0.44;
+            double leftCC = 0.195;
+            double rightCC = 0.747;
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -205,35 +208,6 @@ public class VroomVroom extends LinearOpMode {
                 rightBackPower /= max;
             }
 
-            /*
-            // Hard Stop bool code
-            if (isSlowDrive = false) {
-                if (leftBackPower > 0.8 || leftFrontPower > 0.8 || rightBackPower > 0.8 || rightFrontPower > 0.8) {
-                    isHardStopViable = true;
-                    lastInputTime = System.currentTimeMillis();
-                } else {
-                    isHardStopViable = false;
-                }
-            }
-
-            if (isHardStopViable) {
-                long elapsedTime = System.currentTimeMillis() - lastInputTime;
-            }
-
-            if (elapsedTime < COASTING_DURATION) {
-                leftFrontDrive.setPower(-leftFrontPower * 0.7);
-                rightFrontDrive.setPower(-rightFrontPower * 0.7);
-                leftBackDrive.setPower(-leftBackPower * 0.7);
-                rightBackDrive.setPower(-rightBackPower * 0.7);
-            } else {
-                leftFrontDrive.setPower(0);
-                rightFrontDrive.setPower(0);
-                leftBackDrive.setPower(0);
-                rightBackDrive.setPower(0);
-                isHardStopViable = false;
-            }
-            */
-
             // Using the Intake Subsystem
             if (gamepad2.a) {
                 intakeSubsys.prepareToDrive();
@@ -241,55 +215,56 @@ public class VroomVroom extends LinearOpMode {
                 intakeSubsys.prepareToScore();
             } else if (gamepad2.b) {
                 intakeSubsys.prepareToIntake();
-            } else if (gamepad2.x) {
-                intakeSubsys.grabPixels();
-            }
-            /*
-            else {
-                bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            }
-             */
 
-            // Claw up and down
-            /*
-            if(gamepad2.dpad_down) {
-                panServoPos = panServoPos + 0.002;
-            } if(gamepad2.dpad_up)
-            {
-                panServoPos = panServoPos - 0.002;
-            } if (panServoPos < 0){
-                panServoPos = 0;
-            } if (panServoPos > 1){
-                panServoPos = 1;
+                panServoPosition1 = true;
+                panTimer.reset();
+            } else if (gamepad2.x) {
+                intakeSubsys.prepareToLowScore();
+            } else if (gamepad2.dpad_up) {
+                intakeSubsys.prepareToHang();
             }
-            */
+
+            // Lower Claw Position
+            if(panServoPosition1 && panTimer.milliseconds() > 500.0){
+                panUD.setPosition(0.77);
+                panServoPosition1 = false;
+            }
 
             // Double Claw
-            if (gamepad2.right_stick_button) {
-                clawRPos = 0.44;
-                clawLPos = 0.528;
-            } else if (gamepad2.left_stick_button) {
-                clawRPos = 0.747;
-                clawLPos = 0.195;
+            if (gamepad2.left_stick_button) {
+                clawR.setPosition(rightCO);
+                clawL.setPosition(leftCO);
+            } else if (gamepad2.right_stick_button) {
+                clawR.setPosition(rightCC);
+                clawL.setPosition(leftCC);
             }
 
-            // Claw R
-            if (gamepad2.right_trigger > 0.3) {
-                clawRPos = 0.747;
-            } else if (gamepad2.right_bumper) {
-                clawRPos = 0.44;
-            }
-            // Claw L
-            if (gamepad2.left_trigger > 0.3) {
-                clawLPos = 0.195;
-            } else if (gamepad2.left_bumper) {
-                //Elvis presly
-                clawLPos = 0.528;
-            }
 
+            //test again
+            if (gamepad2.right_trigger > 0.3 || gamepad2.left_trigger > 0.3 || gamepad2.left_bumper || gamepad2.right_bumper) {
+                // Claw R
+                if (gamepad2.right_trigger > 0.3) {
+                    clawR.setPosition(rightCC);
+                } else if (gamepad2.right_bumper) {
+                    clawR.setPosition(rightCO);
+                }
+                // Claw L
+                if (gamepad2.left_trigger > 0.3) {
+                    clawL.setPosition(leftCC);
+                } else if (gamepad2.left_bumper) {
+                    clawL.setPosition(leftCO);
+                }
+            }
             // Claw Arm control
-            if (Math.abs(-gamepad2.right_stick_y) > 0.01)
-                panServoPos = Range.clip(panServoPos + 0.00115 * Math.pow(gamepad2.right_stick_y, 3), 0, 1);
+            panServoCurrentPos = panUD.getPosition();
+            if (-gamepad2.right_stick_y > 0.1) {
+                panServoPos = panServoCurrentPos - 0.001;
+                panUD.setPosition(panServoPos);
+            } else if (-gamepad2.right_stick_y < -0.1) {
+                panServoPos = panServoCurrentPos + 0.001;
+                panUD.setPosition(panServoPos);
+            }
+
 
             // Plane
             if (gamepad1.right_bumper && gamepad1.left_bumper) {
@@ -298,91 +273,46 @@ public class VroomVroom extends LinearOpMode {
                 planePower = 0;
             }
 
-            // Arm test thing
-
+            // Arm
             armPos = bigArm.getTargetPosition();
-            if (gamepad2.dpad_right) {
-                armTargetPos = armPos - 3;
-            } else if (gamepad2.dpad_left) {
-                armTargetPos = armPos + 3;
-            } else if (!gamepad2.dpad_right && !gamepad2.dpad_left) {
+            if (-gamepad2.left_stick_y > 0.1) {
+                armTargetPos = armPos - 2;
+            } else if (-gamepad2.left_stick_y < -0.1) {
+                armTargetPos = armPos + 0.1;
+            } else if (-gamepad2.left_stick_y < 0.1 && -gamepad2.left_stick_y < -0.1) {
                 armTargetPos = 0;
             }
 
-            /*
-            else if (-gamepad2.left_stick_y > -0.1) {
-                armTargetPos = armPos - 50;
-            }
-             */
 
-
-            /*
-            if (-gamepad2.left_stick_y > 0.2) {
-                if (Math.abs(-gamepad2.left_stick_y) > 0.01)
-                    armTargetPos = Range.clip(armPos + 50 * Math.pow(gamepad2.left_stick_y, 3), 0, 1000);
-            } */
-
-            // Pixel Drop
-            pixelDropPos = 1;
-
-            // This is test code:
-            //
-            // Uncomment the following code to test your motor directions.
-            // Each button should make the corresponding motor run FORWARD.
-            //   1) First get all the motors to take to correct positions on the robot
-            //      by adjusting your Robot Configuration if necessary.
-            //   2) Then make sure they run in the correct direction by modifying the
-            //      the setDirection() calls above.
-            // Once the correct motors move in the correct direction re-comment this code.
-
-            /*
-            leftFrontPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
-            leftBackPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
-            rightFrontPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
-            rightBackPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
-            */
-
-
-            // testing back servo
-            if (gamepad1.a){
-                puDrop.setPosition(0);
-            } else if (gamepad1.x) {
-                puDrop.setPosition(1);
-            }
-            // Send calculated power to wheels
-            // Manual Hard Stop???
+            // Manual Hard Stop
             if (gamepad1.left_trigger > 0.1) {
                 leftFrontDrive.setPower(-0.2);
                 rightFrontDrive.setPower(-0.2);
                 leftBackDrive.setPower(-0.2);
                 rightBackDrive.setPower(-0.2);
             }
+            // Slow Drive
             if (gamepad1.right_trigger < 0.1) {
                 leftFrontDrive.setPower(leftFrontPower * 0.5);
                 rightFrontDrive.setPower(rightFrontPower * 0.5);
                 leftBackDrive.setPower(leftBackPower * 0.5);
                 rightBackDrive.setPower(rightBackPower * 0.5);
-                isSlowDrive = false;
             }
             if (gamepad1.right_trigger > 0.1) {
                 leftFrontDrive.setPower(leftFrontPower * 1);
                 rightFrontDrive.setPower(rightFrontPower * 1);
                 leftBackDrive.setPower(leftBackPower * 1);
                 rightBackDrive.setPower(rightBackPower * 1);
-                isSlowDrive = true;
             }
-            if (gamepad2.dpad_right || gamepad2.dpad_left) {
+            if (-gamepad2.left_stick_y > 0.2 || -gamepad2.left_stick_y < -0.2) {
                 bigArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                bigArm.setTargetPosition(armTargetPos);
+                bigArm.setTargetPosition((int) armTargetPos);
                 bigArm.setPower(0.6);
             }
-            hang.setPower(gamepad2.dpad_up ? 1.0 : 0);
-            hang.setPower(gamepad2.dpad_down ? -1.0 : 0);
-            //panUD.setPosition(panServoPos);
+            hang.setPower(gamepad2.dpad_left ? 1.0 : 0);
+            hang.setPower(gamepad2.dpad_right ? -1.0 : 0);
             planeOpen.setPower(planePower);
-            pixelDrop.setPosition(pixelDropPos);
-            clawL.setPosition(clawLPos);
-            clawR.setPosition(clawRPos);
+            pixelDrop.setPosition(1);
 
 
             // Show the elapsed game time and wheel power.
@@ -390,9 +320,7 @@ public class VroomVroom extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.addData("Pan Up/Down", "%1f", panServoPos);
-            telemetry.addData("Right Trigger", "%1f", gamepad2.right_trigger);
-            telemetry.addData("Pixel Drop Pos", "%1f", pixelDropPos);
-            telemetry.addData("Claw Pos (L then R)", "%1f, %1f", clawLPos, clawRPos);
+            telemetry.addData("Claw Pos (L then R)", "%1f, %1f", clawL.getPosition(), clawR.getPosition());
             telemetry.addData("Arm target encoder value", armTargetPos);
             telemetry.addData("Arm encoder value", armPos);
 

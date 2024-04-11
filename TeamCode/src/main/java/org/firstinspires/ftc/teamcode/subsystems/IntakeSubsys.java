@@ -29,9 +29,11 @@ public class IntakeSubsys {
     public static double INTAKE_CLAW_SERVO_LEFT_CLOSE = 0.5;
     public static double INTAKE_CLAW_SERVO_RIGHT_CLOSE = 0.8;
 
-    public static double INTAKE_PIVOT_SERVO_GRAB = 0.77;
+    public static double INTAKE_PIVOT_SERVO_GRAB = 0.73;
     public static double INTAKE_PIVOT_SERVO_FOLD = 0.17;
     public static double INTAKE_PIVOT_SERVO_SCORE = 0.72;
+    public static double INTAKE_PIVOT_SERVO_LOW = 0.68;
+    public static double INTAKE_PIVOT_SERVO_HANG = 1;
 
     // intake arm encoder value for different positions
     // this needs to be tuned with motor tester or using FtCDashboard
@@ -39,7 +41,8 @@ public class IntakeSubsys {
     public static int INTAKE_ARM_INTAKE_POSITION = -287;
     public static int INTAKE_ARM_INTAKE_SCORE = -740;
     public static int INTAKE_ARM_INTAKE_SAFE_CROSS = 0;
-    public static int INTAKE_ARM_INTAKE_HANGING = 2000;
+    public static int INTAKE_ARM_INTAKE_LOW_SCORE = -520;
+    public static int INTAKE_ARM_INTAKE_HANGING = -1200;
 
     public enum ClawState {
         CLOSED,
@@ -116,9 +119,6 @@ public class IntakeSubsys {
         // move the pivot arm
         intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_GRAB);
 
-        // open the claws
-        openClaws(ClawState.OPENED);
-
     }
 
     public void grabPixels() {
@@ -136,8 +136,11 @@ public class IntakeSubsys {
         // move the pivot arm
         intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_FOLD);
 
-        // open the claws
-        openClaws(ClawState.CLOSED);
+        //claws close
+        intakeClawServoLeft.setPosition(0.195);
+        intakeClawServoRight.setPosition(0.747);
+
+
     }
 
     public void prepareToScore() {
@@ -153,6 +156,24 @@ public class IntakeSubsys {
 
         // open the claws
         openClaws(ClawState.CLOSED);
+    }
+
+    public void prepareToLowScore() {
+        intakeArmMotor.setTargetPosition(INTAKE_ARM_INTAKE_LOW_SCORE);
+
+        intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeArmMotor.setPower(0.9);
+
+        intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_LOW);
+    }
+
+    public void prepareToHang() {
+        intakeArmMotor.setTargetPosition(INTAKE_ARM_INTAKE_HANGING);
+
+        intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intakeArmMotor.setPower(0.9);
+
+        intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_HANG);
     }
 
 }

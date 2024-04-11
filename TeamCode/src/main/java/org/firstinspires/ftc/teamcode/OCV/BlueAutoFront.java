@@ -99,6 +99,8 @@ public class BlueAutoFront extends OpMode {
                         .lineToConstantHeading(new Vector2d(49, 41.5))
                         .lineToConstantHeading(new Vector2d(45, 41.5))
 
+
+
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0);
                         })
