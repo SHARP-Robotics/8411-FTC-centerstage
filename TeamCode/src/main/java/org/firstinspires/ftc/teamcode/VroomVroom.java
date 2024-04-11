@@ -98,11 +98,13 @@ public class VroomVroom extends LinearOpMode {
     private Servo clawR = null;
     private Servo puDrop = null;
     public static boolean isClawOpen = false;
-    public static int armTargetPos = 0;
-    public static int armPos;
+    public static double armTargetPos = 0;
+    public static int armPosI;
+    public static double armPos;
     private IntakeSubsys intakeSubsys;
     public static double panServoPos = 0.17;
     public static boolean panServoPosition1 = false;
+    public static double panServoCurrentPos;
     ElapsedTime panTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     @Override
     public void runOpMode() {
@@ -230,34 +232,39 @@ public class VroomVroom extends LinearOpMode {
 
             // Double Claw
             if (gamepad2.left_stick_button) {
-                if (isClawOpen == false) {
-                    clawR.setPosition(rightCO);
-                    clawL.setPosition(leftCO);
-                    isClawOpen = true;
-                } else {
-                    clawR.setPosition(rightCC);
-                    clawL.setPosition(leftCC);
-                    isClawOpen = false;
-                }
+                clawR.setPosition(rightCO);
+                clawL.setPosition(leftCO);
+            } else if (gamepad2.right_stick_button) {
+                clawR.setPosition(rightCC);
+                clawL.setPosition(leftCC);
             }
+
 
             //test again
-            // Claw R
-            if (gamepad2.right_trigger > 0.3) {
-                clawR.setPosition(rightCC);
-            } else if (gamepad2.right_bumper) {
-                clawR.setPosition(rightCO);
+            if (gamepad2.right_trigger > 0.3 || gamepad2.left_trigger > 0.3 || gamepad2.left_bumper || gamepad2.right_bumper) {
+                // Claw R
+                if (gamepad2.right_trigger > 0.3) {
+                    clawR.setPosition(rightCC);
+                } else if (gamepad2.right_bumper) {
+                    clawR.setPosition(rightCO);
+                }
+                // Claw L
+                if (gamepad2.left_trigger > 0.3) {
+                    clawL.setPosition(leftCC);
+                } else if (gamepad2.left_bumper) {
+                    clawL.setPosition(leftCO);
+                }
             }
-            // Claw L
-            if (gamepad2.left_trigger > 0.3) {
-                clawL.setPosition(leftCC);
-            } else if (gamepad2.left_bumper) {
-                clawL.setPosition(leftCO);
+            // Claw Arm control
+            panServoCurrentPos = panUD.getPosition();
+            if (-gamepad2.right_stick_y > 0.1) {
+                panServoPos = panServoCurrentPos - 0.001;
+                panUD.setPosition(panServoPos);
+            } else if (-gamepad2.right_stick_y < -0.1) {
+                panServoPos = panServoCurrentPos + 0.001;
+                panUD.setPosition(panServoPos);
             }
 
-            // Claw Arm control
-            if (Math.abs(-gamepad2.right_stick_y) > 0.1)
-                panServoPos = Range.clip(panServoPos + 0.00115 * Math.pow(gamepad2.right_stick_y, 3), 0, 1);
 
             // Plane
             if (gamepad1.right_bumper && gamepad1.left_bumper) {
@@ -269,9 +276,9 @@ public class VroomVroom extends LinearOpMode {
             // Arm
             armPos = bigArm.getTargetPosition();
             if (-gamepad2.left_stick_y > 0.1) {
-                armTargetPos = armPos - 3;
-            } else if (-gamepad2.left_stick_y > -0.1) {
-                armTargetPos = armPos + 3;
+                armTargetPos = armPos - 2;
+            } else if (-gamepad2.left_stick_y < -0.1) {
+                armTargetPos = armPos + 0.1;
             } else if (-gamepad2.left_stick_y < 0.1 && -gamepad2.left_stick_y < -0.1) {
                 armTargetPos = 0;
             }
@@ -297,9 +304,9 @@ public class VroomVroom extends LinearOpMode {
                 leftBackDrive.setPower(leftBackPower * 1);
                 rightBackDrive.setPower(rightBackPower * 1);
             }
-            if (gamepad2.dpad_right || gamepad2.dpad_left) {
+            if (-gamepad2.left_stick_y > 0.2 || -gamepad2.left_stick_y < -0.2) {
                 bigArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                bigArm.setTargetPosition(armTargetPos);
+                bigArm.setTargetPosition((int) armTargetPos);
                 bigArm.setPower(0.6);
             }
             hang.setPower(gamepad2.dpad_left ? 1.0 : 0);
