@@ -29,7 +29,7 @@ public class IntakeSubsys {
     public static double INTAKE_CLAW_SERVO_LEFT_CLOSE = 0.5;
     public static double INTAKE_CLAW_SERVO_RIGHT_CLOSE = 0.8;
 
-    public static double INTAKE_PIVOT_SERVO_GRAB = 0.77;
+    public static double INTAKE_PIVOT_SERVO_GRAB = 0.73;
     public static double INTAKE_PIVOT_SERVO_FOLD = 0.17;
     public static double INTAKE_PIVOT_SERVO_SCORE = 0.72;
 

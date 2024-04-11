@@ -102,6 +102,8 @@ public class VroomVroom extends LinearOpMode {
     public static int armPos;
     private IntakeSubsys intakeSubsys;
     public static double panServoPos = 0.17;
+    public static boolean panServoPosition1 = false;
+    ElapsedTime panTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     @Override
     public void runOpMode() {
         // Initialize the hardware variables. Note that the strings used here must correspond
@@ -173,7 +175,6 @@ public class VroomVroom extends LinearOpMode {
 
             // Other Stuff
             double planePower;
-            double pixelDropPos;
 
             // Positions
             double leftCO = 0.528;
@@ -212,10 +213,19 @@ public class VroomVroom extends LinearOpMode {
                 intakeSubsys.prepareToScore();
             } else if (gamepad2.b) {
                 intakeSubsys.prepareToIntake();
+
+                panServoPosition1 = true;
+                panTimer.reset();
             } else if (gamepad2.x) {
                 intakeSubsys.prepareToLowScore();
             } else if (gamepad2.dpad_up) {
                 intakeSubsys.prepareToHang();
+            }
+
+            // Lower Claw Position
+            if(panServoPosition1 && panTimer.milliseconds() > 500.0){
+                panUD.setPosition(0.77);
+                panServoPosition1 = false;
             }
 
             // Double Claw
@@ -245,7 +255,7 @@ public class VroomVroom extends LinearOpMode {
             }
 
             // Claw Arm control
-            if (Math.abs(-gamepad2.right_stick_y) > 0.01)
+            if (Math.abs(-gamepad2.right_stick_y) > 0.1)
                 panServoPos = Range.clip(panServoPos + 0.00115 * Math.pow(gamepad2.right_stick_y, 3), 0, 1);
 
             // Plane
