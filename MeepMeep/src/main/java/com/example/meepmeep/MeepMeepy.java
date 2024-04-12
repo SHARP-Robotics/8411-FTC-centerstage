@@ -16,14 +16,18 @@ public class MeepMeepy {
                 // We set this bot to be blue
                 .setColorScheme(new ColorSchemeBlueDark())
                 .setConstraints(20, 20, Math.toRadians(180), Math.toRadians(180), 15)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-34.5, 61, Math.toRadians(90.00)))
-                        .lineToConstantHeading(new Vector2d(-36, 51))
-                        .lineToLinearHeading(new Pose2d(-39, 36.00, Math.toRadians(140)))
-                        .lineToConstantHeading(new Vector2d(-42, 36.00))
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-34.5, -61, Math.toRadians(-90.00)))
+                        .lineToConstantHeading(new Vector2d(-52, -45))
+                        .lineToLinearHeading(new Pose2d(-42, -57.00, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(45, -57))
+                        .lineToConstantHeading(new Vector2d(51.00, -31.5))
+                        .lineToConstantHeading(new Vector2d(49, -31.5))
+                        .lineToConstantHeading(new Vector2d(45, -31.5))
+                        .lineToConstantHeading(new Vector2d(45, -60))
+                        .lineToConstantHeading(new Vector2d(60, -60))
+
 
                         .build());
-
-
 
 
                 meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
