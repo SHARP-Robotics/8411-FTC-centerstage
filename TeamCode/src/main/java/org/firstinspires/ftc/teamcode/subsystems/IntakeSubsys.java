@@ -31,17 +31,17 @@ public class IntakeSubsys {
 
     public static double INTAKE_PIVOT_SERVO_GRAB = 0.66;
     public static double INTAKE_PIVOT_SERVO_FOLD = 0.24;
-    public static double INTAKE_PIVOT_SERVO_SCORE = 0.72;
-    public static double INTAKE_PIVOT_SERVO_LOW = 0.68;
+    public static double INTAKE_PIVOT_SERVO_SCORE = 0.68;
+    public static double INTAKE_PIVOT_SERVO_LOW = 0.62;
     public static double INTAKE_PIVOT_SERVO_HANG = 1;
 
     // intake arm encoder value for different positions
     // this needs to be tuned with motor tester or using FtCDashboard
     //-----------------------------------------------------------------
     public static int INTAKE_ARM_INTAKE_POSITION = -287;
-    public static int INTAKE_ARM_INTAKE_SCORE = -740;
+    public static int INTAKE_ARM_INTAKE_SCORE = -700;
     public static int INTAKE_ARM_INTAKE_SAFE_CROSS = 0;
-    public static int INTAKE_ARM_INTAKE_LOW_SCORE = -520;
+    public static int INTAKE_ARM_INTAKE_LOW_SCORE = -450;
     public static int INTAKE_ARM_INTAKE_HANGING = -1200;
 
     public enum ClawState {
