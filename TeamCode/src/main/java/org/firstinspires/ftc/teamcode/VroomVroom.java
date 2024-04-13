@@ -106,6 +106,14 @@ public class VroomVroom extends LinearOpMode {
     public static boolean panServoPositionDown = false;
     public static boolean panServoPositionUp = false;
     public static double panServoCurrentPos;
+    public static double planePower;
+
+    // Positions
+    public static double leftCO = 0.528;
+    public static double rightCO = 0.44;
+    public static double leftCC = 0.195;
+    public static double rightCC = 0.747;
+
     ElapsedTime panTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     ElapsedTime panTimer2 = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     @Override
@@ -120,7 +128,6 @@ public class VroomVroom extends LinearOpMode {
         ramp = hardwareMap.get(DcMotorEx.class, "ramp");
         spinPixel = hardwareMap.get(DcMotorEx.class, "spin");
         hang = hardwareMap.get(DcMotorEx.class, "hanging");
-        // panUD = hardwareMap.get(Servo.class, "pan");
         panUD = hardwareMap.get(ServoImplEx.class, "pan");
         planeOpen = hardwareMap.get(CRServo.class, "plane");
         pixelDrop = hardwareMap.get(Servo.class, "p3Drop");
@@ -178,15 +185,6 @@ public class VroomVroom extends LinearOpMode {
             double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral = gamepad1.left_stick_x;
             double yaw = gamepad1.right_stick_x;
-
-            // Other Stuff
-            double planePower;
-
-            // Positions
-            double leftCO = 0.528;
-            double rightCO = 0.44;
-            double leftCC = 0.195;
-            double rightCC = 0.747;
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -327,8 +325,7 @@ public class VroomVroom extends LinearOpMode {
                 hang.setPower(gamepad2.dpad_left ? 1.0 : 0);
                 hang.setPower(gamepad2.dpad_right ? -1.0 : 0);
                 bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            } else {
-                bigArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                bigArm.setPower(0);
             }
             planeOpen.setPower(planePower);
             pixelDrop.setPosition(1);
