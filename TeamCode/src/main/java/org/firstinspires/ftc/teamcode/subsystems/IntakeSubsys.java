@@ -173,7 +173,7 @@ public class IntakeSubsys {
         intakeArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intakeArmMotor.setPower(0.9);
 
-        intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_HANG);
+        intakePivotServo.setPosition(INTAKE_PIVOT_SERVO_GRAB);
     }
 
 }

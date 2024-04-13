@@ -322,8 +322,8 @@ public class VroomVroom extends LinearOpMode {
                 bigArm.setPower(0.6);
             }
             if (gamepad2.dpad_left || gamepad2.dpad_right) {
-                hang.setPower(gamepad2.dpad_left ? 1.0 : 0);
-                hang.setPower(gamepad2.dpad_right ? -1.0 : 0);
+                hang.setPower(gamepad2.dpad_left ? 0.5 : 0);
+                hang.setPower(gamepad2.dpad_right ? -0.5 : 0);
                 bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 bigArm.setPower(0);
             }
