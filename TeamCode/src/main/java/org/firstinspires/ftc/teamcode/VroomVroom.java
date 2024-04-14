@@ -317,15 +317,23 @@ public class VroomVroom extends LinearOpMode {
                 rightBackDrive.setPower(rightBackPower * 1);
             }
             if (-gamepad2.left_stick_y > 0.2 || -gamepad2.left_stick_y < -0.2) {
-                bigArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 bigArm.setTargetPosition((int) armTargetPos);
+                bigArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 bigArm.setPower(0.6);
             }
-            if (gamepad2.dpad_left || gamepad2.dpad_right) {
-                hang.setPower(gamepad2.dpad_left ? 0.5 : 0);
-                hang.setPower(gamepad2.dpad_right ? -0.5 : 0);
+            if (gamepad2.dpad_left) {
+                hang.setPower(gamepad2.dpad_left ? 0.8 : 0);
                 bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 bigArm.setPower(0);
+            } else {
+                hang.setPower(0);
+            }
+            if (gamepad2.dpad_right) {
+                hang.setPower(gamepad2.dpad_right ? -0.8 : 0);
+                bigArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                bigArm.setPower(0);
+            } else {
+                hang.setPower(0);
             }
             planeOpen.setPower(planePower);
             pixelDrop.setPosition(1);

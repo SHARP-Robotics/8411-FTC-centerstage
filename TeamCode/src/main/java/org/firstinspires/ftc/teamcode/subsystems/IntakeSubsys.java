@@ -38,7 +38,7 @@ public class IntakeSubsys {
     // intake arm encoder value for different positions
     // this needs to be tuned with motor tester or using FtCDashboard
     //-----------------------------------------------------------------
-    public static int INTAKE_ARM_INTAKE_POSITION = -287;
+    public static int INTAKE_ARM_INTAKE_POSITION = -247;
     public static int INTAKE_ARM_INTAKE_SCORE = -700;
     public static int INTAKE_ARM_INTAKE_SAFE_CROSS = 0;
     public static int INTAKE_ARM_INTAKE_LOW_SCORE = -450;

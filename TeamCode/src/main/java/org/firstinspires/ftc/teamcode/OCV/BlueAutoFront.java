@@ -13,6 +13,11 @@ import org.firstinspires.ftc.vision.VisionPortal;
 
 import java.util.Vector;
 
+/*
+IMPORTANT
+Left has skew for this, its not super consistent
+ */
+
 @Autonomous
 public class BlueAutoFront extends OpMode {
     private OCVVisionProc drawProcessor;
@@ -71,7 +76,7 @@ public class BlueAutoFront extends OpMode {
                 drive.setPoseEstimate(startPoseL);
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
                         .lineToConstantHeading(new Vector2d(-36, 51))
-                        .lineToLinearHeading(new Pose2d(-35, 32.00, Math.toRadians(160)))
+                        .lineToLinearHeading(new Pose2d(-34.5, 32.00, Math.toRadians(160)))
                         .lineToConstantHeading(new Vector2d(-42, 36.00))
 
                         .addDisplacementMarker(16, () -> {
@@ -79,7 +84,7 @@ public class BlueAutoFront extends OpMode {
                         })
 
 
-                        .addDisplacementMarker(2, () -> {
+                        .addDisplacementMarker(16, () -> {
                             backPixelDrop.setPosition(0.6);
                         })
 
@@ -90,14 +95,14 @@ public class BlueAutoFront extends OpMode {
                         })
 
                         .lineToConstantHeading(new Vector2d(45, 57))
-                        .lineToConstantHeading(new Vector2d(49.50, 45.5))
+                        .lineToConstantHeading(new Vector2d(49.50, 44.5))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0.78);
                         })
 
-                        .lineToConstantHeading(new Vector2d(49, 45.5))
-                        .lineToConstantHeading(new Vector2d(46, 45.5))
+                        .lineToConstantHeading(new Vector2d(49, 44.5))
+                        .lineToConstantHeading(new Vector2d(46, 44.5))
 
 
 

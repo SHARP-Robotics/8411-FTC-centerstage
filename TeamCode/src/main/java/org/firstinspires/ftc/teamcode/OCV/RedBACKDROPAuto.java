@@ -70,8 +70,9 @@ public class RedBACKDROPAuto extends OpMode {
                 Pose2d startPoseL = new Pose2d(11, -61, Math.toRadians(-90));
                 drive.setPoseEstimate(startPoseL);
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToConstantHeading(new Vector2d(13, -36))
-                        .lineToLinearHeading(new Pose2d(13.5, -36, Math.toRadians(-20)))
+                        .lineToConstantHeading(new Vector2d(11, -42))
+                        .lineToLinearHeading(new Pose2d(10, -37, Math.toRadians(-20)))
+                        .lineToConstantHeading(new Vector2d(13, -37))
 
                         .addDisplacementMarker(13.5,() -> {
                             pixelDrop.setPosition(0);
@@ -84,20 +85,20 @@ public class RedBACKDROPAuto extends OpMode {
                         })
 
                         .lineToLinearHeading(new Pose2d(40, -23, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(50, -24.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0.8);
+                            backPixelDrop.setPosition(0.79);
                         })
 
                         .lineToConstantHeading(new Vector2d(51, -24.5))
-                        .lineToConstantHeading(new Vector2d(49.5, -24.5))
                         .lineToConstantHeading(new Vector2d(45, -24.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0);
+                            backPixelDrop.setPosition(1);
                         })
 
-                        .lineToConstantHeading(new Vector2d(48, -60))
+                        .lineToConstantHeading(new Vector2d(45, -60))
                         .lineToConstantHeading(new Vector2d(60,-60))
 
                         .build();
@@ -116,31 +117,34 @@ public class RedBACKDROPAuto extends OpMode {
 
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
-                        .strafeTo(new Vector2d(18, -35))
+                        .strafeTo(new Vector2d(18, -30))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(0);
                         })
 
                         .lineToConstantHeading(new Vector2d(18.00, -42.00))
-                        .lineToConstantHeading(new Vector2d(28.00, -45.00))
+                        .lineToConstantHeading(new Vector2d(26.00, -45.00))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
 
-                        .lineToLinearHeading(new Pose2d(41, -35, Math.toRadians(180)))
-                        .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0.8);
-                        })
-                        .lineToConstantHeading(new Vector2d(50, -35))
-                        .lineToConstantHeading(new Vector2d(46, -35))
-                        .lineToConstantHeading(new Vector2d(46, -60))
+                        .lineToLinearHeading(new Pose2d(38, -40, Math.toRadians(180)))
+                        .lineToConstantHeading(new Vector2d(48.5, -37))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0);
+                            backPixelDrop.setPosition(0.78);
                         })
 
+                        .lineToConstantHeading(new Vector2d(50, -37))
+                        .lineToConstantHeading(new Vector2d(44, -37))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(1);
+                        })
+
+                        .lineToConstantHeading(new Vector2d(44, -60))
                         .lineToConstantHeading(new Vector2d(60, -60))
                         .build();
                 drive.followTrajectorySequence(trajR);
@@ -164,11 +168,12 @@ public class RedBACKDROPAuto extends OpMode {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToLinearHeading(new Pose2d(40, -30, Math.toRadians(180)))
+                        .lineToLinearHeading(new Pose2d(42, -32, Math.toRadians(180)))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
+                        .lineToConstantHeading(new Vector2d(51.00, -30))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0.78);
@@ -176,6 +181,11 @@ public class RedBACKDROPAuto extends OpMode {
 
                         .lineToConstantHeading(new Vector2d(51.00, -28))
                         .lineToConstantHeading(new Vector2d(49, -28))
+
+                        .addDisplacementMarker(() -> {
+                            backPixelDrop.setPosition(1);
+                        })
+
                         .lineToConstantHeading(new Vector2d(45, -30))
                         .lineToConstantHeading(new Vector2d(45, -60))
                         .lineToConstantHeading(new Vector2d(59, -59))
