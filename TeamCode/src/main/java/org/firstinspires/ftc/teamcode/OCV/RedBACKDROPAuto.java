@@ -173,13 +173,13 @@ public class RedBACKDROPAuto extends OpMode {
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
-                        .lineToConstantHeading(new Vector2d(51.00, -30))
+                        .lineToConstantHeading(new Vector2d(49.0, -30))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(0.78);
                         })
 
-                        .lineToConstantHeading(new Vector2d(51.00, -28))
+                        .lineToConstantHeading(new Vector2d(50.00, -28))
                         .lineToConstantHeading(new Vector2d(49, -28))
 
                         .addDisplacementMarker(() -> {
