@@ -70,11 +70,11 @@ public class RedBACKDROPAuto extends OpMode {
                 Pose2d startPoseL = new Pose2d(11, -61, Math.toRadians(-90));
                 drive.setPoseEstimate(startPoseL);
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToConstantHeading(new Vector2d(11, -42))
-                        .lineToLinearHeading(new Pose2d(10, -37, Math.toRadians(-20)))
-                        .lineToConstantHeading(new Vector2d(13, -37))
+                        .lineToConstantHeading(new Vector2d(11, -40))
+                        .lineToLinearHeading(new Pose2d(10, -35, Math.toRadians(-35)))
+                        .lineToConstantHeading(new Vector2d(13, -35))
 
-                        .addDisplacementMarker(13.5,() -> {
+                        .addDisplacementMarker(15.75,() -> {
                             pixelDrop.setPosition(0);
                         })
 

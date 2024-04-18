@@ -11,10 +11,13 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
 
-import java.util.Vector;
+/*
+IMPORTANT
+Left has skew for this, its not super consistent
+ */
 
 @Autonomous
-public class BlueBACKDROPAuto extends OpMode {
+public class BlueAutoFrontSingularity extends OpMode {
     private OCVVisionProc drawProcessor;
     private VisionPortal visionPortal;
     private Servo pixelDrop = null;
@@ -64,132 +67,171 @@ public class BlueBACKDROPAuto extends OpMode {
 
         switch (positionDetect) {
             case 1:
+                visionPortal.setProcessorEnabled(drawProcessor, false);
+                visionPortal.stopStreaming();
                 SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
-                Pose2d startPoseL = new Pose2d(11, 61, Math.toRadians(90));
-
+                Pose2d startPoseL = new Pose2d(-36, 61, Math.toRadians(90));
                 drive.setPoseEstimate(startPoseL);
-
                 TrajectorySequence trajL = drive.trajectorySequenceBuilder(startPoseL)
-                        .lineToConstantHeading(new Vector2d(25.00, 34-.00))
+                        .lineToConstantHeading(new Vector2d(-36, 51))
+                        .lineToLinearHeading(new Pose2d(-34.5, 32.00, Math.toRadians(160)))
+                        .lineToConstantHeading(new Vector2d(-42, 36.00))
 
-                        .addDisplacementMarker(() -> {
-                            pixelDrop.setPosition(0);
+                        .addDisplacementMarker(16, () -> {
+                            pixelDrop.setPosition(0.1);
                         })
 
-                        .lineToConstantHeading(new Vector2d(25.00, 31.00))
-                        .lineToConstantHeading(new Vector2d(25.00, 41.5))
-                        .lineToLinearHeading(new Pose2d(40.00, 41.5, Math.toRadians(-180)))
+
+                        .addDisplacementMarker(16, () -> {
+                            backPixelDrop.setPosition(0.6);
+                        })
+
+                        .lineToLinearHeading(new Pose2d(-42, 57.00, Math.toRadians(180)))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
 
-                        .lineToConstantHeading(new Vector2d(46.75, 40))
+                        .lineToConstantHeading(new Vector2d(44, 57))
+                        .lineToConstantHeading(new Vector2d(48.50, 44.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0.79);
+                            backPixelDrop.setPosition(0.78);
                         })
 
-                        .lineToConstantHeading(new Vector2d(49.75, 40))
-                        .lineToConstantHeading(new Vector2d(46, 40))
+                        .lineToConstantHeading(new Vector2d(48, 44.5))
+                        .lineToConstantHeading(new Vector2d(47, 44.5))
+
+
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
                         })
 
-                        .lineToConstantHeading(new Vector2d(46, 58))
-                        .lineToConstantHeading(new Vector2d(59, 58))
+                        .lineToConstantHeading(new Vector2d(44, 60))
+                        .lineToConstantHeading(new Vector2d(59, 60))
+
+
+
                         .build();
+
                 drive.followTrajectorySequence(trajL);
 
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 positionDetect = 0;
                 break;
             case 3:
+                visionPortal.setProcessorEnabled(drawProcessor, false);
+                visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
 
-                Pose2d startPoseR = new Pose2d(11, 61, Math.toRadians(90));
+                Pose2d startPoseR = new Pose2d(-36, 61, Math.toRadians(90));
 
                 drive.setPoseEstimate(startPoseR);
                 TrajectorySequence trajR = drive.trajectorySequenceBuilder(startPoseR)
-                        .lineToConstantHeading(new Vector2d(11, 54))
-                        .lineToLinearHeading(new Pose2d(9, 41.5, Math.toRadians(60)))
-                        .lineToConstantHeading(new Vector2d(15, 41.5))
+                        .waitSeconds(1.5)
 
-                        .addDisplacementMarker(6.5, () -> {
-                            pixelDrop.setPosition(0);
+                        .lineToConstantHeading(new Vector2d(-42.5, 45))
+
+                        .addDisplacementMarker(2, () -> {
+                            pixelDrop.setPosition(0.6);
                         })
-                        .lineToLinearHeading(new Pose2d(15, 28, Math.toRadians(180)))
-                        .lineToConstantHeading(new Vector2d(22, 28))
+
+
+                        .addDisplacementMarker(2,() -> {
+                            backPixelDrop.setPosition(0.6);
+                        })
+
+                        .lineToLinearHeading(new Pose2d(-42, 57.00, Math.toRadians(180)))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
 
-                        .lineToConstantHeading(new Vector2d(47, 30))
+                        .lineToConstantHeading(new Vector2d(45, 57))
+                        .lineToConstantHeading(new Vector2d(49.00, 29))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0.79);
+                            backPixelDrop.setPosition(0.78);
                         })
 
-                        .lineToConstantHeading(new Vector2d(48, 30))
-                        .lineToConstantHeading(new Vector2d(45, 30))
-                        .lineToConstantHeading(new Vector2d(45, 59))
+                        .lineToConstantHeading(new Vector2d(48, 29))
+                        .lineToConstantHeading(new Vector2d(45, 29))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
                         })
 
-                        .lineToConstantHeading(new Vector2d(59, 59))
+                        .lineToConstantHeading(new Vector2d(45, 60))
+                        .lineToConstantHeading(new Vector2d(60, 60))
+
+                        .addDisplacementMarker(() -> {
+                            pixelDrop.setPosition(1);
+                        })
+
+                        .addDisplacementMarker(17, () -> {
+                            pixelDrop.setPosition(0);
+                        })
                         .build();
+
+
                 drive.followTrajectorySequence(trajR);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 positionDetect = 0;
                 break;
             case 2:
+                visionPortal.setProcessorEnabled(drawProcessor, false);
+                visionPortal.stopStreaming();
                 drive = new SampleMecanumDrive(hardwareMap);
 
-                Pose2d startPoseM = new Pose2d(11, 61, Math.toRadians(90));
+                telemetry.addData("Testing back servo pos", backPixelDrop.getPosition());
 
+                Pose2d startPoseM = new Pose2d(-34.5, 61, Math.toRadians(90));
                 drive.setPoseEstimate(startPoseM);
                 TrajectorySequence trajM = drive.trajectorySequenceBuilder(startPoseM)
-                        .lineToConstantHeading(new Vector2d(11.00, 34.00))
+                        .lineToConstantHeading(new Vector2d(-37, 36.00))
 
-
-                        .addDisplacementMarker(6.25, () -> {
+                        .addDisplacementMarker(2, () -> {
                             pixelDrop.setPosition(0);
                         })
 
-                        .lineToConstantHeading(new Vector2d(11.00, 38.5))
+
+                        .addDisplacementMarker(2,() -> {
+                            backPixelDrop.setPosition(0.5);
+                        })
+
+                        .lineToLinearHeading(new Pose2d(-42, 57.00, Math.toRadians(180)))
 
                         .addDisplacementMarker(() -> {
                             pixelDrop.setPosition(1);
                         })
-                        .lineToLinearHeading(new Pose2d(40.00, 36.5, Math.toRadians(-180)))
-                        .lineToConstantHeading(new Vector2d(47.75, 37.5))
+
+                        .lineToConstantHeading(new Vector2d(45, 57))
+                        .lineToConstantHeading(new Vector2d(50.00, 35.5))
 
                         .addDisplacementMarker(() -> {
-                            backPixelDrop.setPosition(0.76);
+                            backPixelDrop.setPosition(0.78);
                         })
 
-                        .lineToConstantHeading(new Vector2d(48.75, 37.5))
-                        .lineToConstantHeading(new Vector2d(45, 37.5))
-                        .lineToConstantHeading(new Vector2d(45, 58))
+                        .lineToConstantHeading(new Vector2d(49, 35.5))
+                        .lineToConstantHeading(new Vector2d(45, 35.5))
 
                         .addDisplacementMarker(() -> {
                             backPixelDrop.setPosition(1);
                         })
-                        .lineToConstantHeading(new Vector2d(59, 58))
+
+                        .lineToConstantHeading(new Vector2d(45, 60))
+                        .lineToConstantHeading(new Vector2d(60, 60))
+
                         .build();
+
+
                 drive.followTrajectorySequence(trajM);
                 visionPortal.setProcessorEnabled(drawProcessor, false);
                 positionDetect = 0;
                 break;
             case 0:
-                visionPortal.setProcessorEnabled(drawProcessor, true);
                 break;
-
         }
     }
 }

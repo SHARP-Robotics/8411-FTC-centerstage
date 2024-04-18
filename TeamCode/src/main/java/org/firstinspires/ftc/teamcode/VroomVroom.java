@@ -159,8 +159,6 @@ public class VroomVroom extends LinearOpMode {
         planeOpen.setDirection(CRServo.Direction.FORWARD);
         pixelDrop.setDirection(Servo.Direction.FORWARD);
         bigArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // Dashboard
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
